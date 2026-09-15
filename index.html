@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CMSAC Athletics</title>
+  <meta name="description" content="Commonwealth Middle School Athletic Conference">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>CMSAC Athletics</h1>
-  <p>Website development in progress.</p>
+<header class="topbar">
+  <div class="brand">
+    <div class="cmsac-badge">
+      <div class="badge-top">★</div>
+      <div class="badge-main">CMSAC</div>
+    </div>
+    <div class="brand-copy">
+      <div>COMMONWEALTH MIDDLE SCHOOL</div>
+      <div>ATHLETIC CONFERENCE</div>
+      <small>STUDENT ATHLETES &nbsp; | &nbsp; STRONGER COMMUNITIES &nbsp; | &nbsp; A BRIGHTER TOMORROW</small>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a class="active" href="index.html">Home</a>
+    <a href="#sports">Sports</a>
+    <a href="#conference-info">Conference Info</a>
+    <a href="#administration">Administration</a>
+  </nav>
+</header>
+
+<section class="announcements">
+  <div class="ann-label">
+    <span class="megaphone">📣</span>
+    <div><strong>ANNOUNCEMENTS</strong><small>STAY INFORMED. STAY CONNECTED.</small></div>
+  </div>
+  <div class="ann-scroll">
+    <article><b>WELCOME</b><strong>CMSAC Website Development Underway</strong><span>Girls Basketball is the first sport being activated.</span></article>
+    <article><b>COMING SOON</b><strong>Conference Updates</strong><span>Brief notices and tournament reminders will appear here.</span></article>
+  </div>
+  <button disabled>VIEW ALL ANNOUNCEMENTS →</button>
+</section>
+
+<main class="layout">
+  <aside class="schools">
+    <h2>MEMBER SCHOOLS</h2>
+    <div class="school-grid">
+      <div><img src="assets/estill.png" alt="Estill County"></div>
+      <div><img src="assets/garrard.png" alt="Garrard County"></div>
+      <div><img src="assets/farristown.png" alt="Farristown"></div>
+      <div><img src="assets/foley.png" alt="Foley"></div>
+      <div><img src="assets/madison.png" alt="Madison"></div>
+      <div><img src="assets/caudill.png" alt="Caudill"></div>
+      <div><img src="assets/clark-moores.png" alt="Clark-Moores"></div>
+      <div><img src="assets/model.png" alt="Model"></div>
+      <div><img src="assets/berea.png" alt="Berea"></div>
+    </div>
+  </aside>
+
+  <section class="maincol">
+    <div class="sports-title" id="sports">
+      <span>CMSAC ATHLETICS</span>
+      <h1>CHOOSE A SPORT</h1>
+      <p>BUILDING CHAMPIONS ON AND OFF THE FIELD</p>
+    </div>
+
+    <div class="sports-grid">
+      <a class="sport active-card" href="girls-basketball.html">
+        <div class="sport-art">🏀</div>
+        <div class="sport-footer"><strong>GIRLS<br>BASKETBALL</strong><span>→</span></div>
+      </a>
+
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🏀</div><div class="sport-footer"><strong>BOYS<br>BASKETBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🏈</div><div class="sport-footer"><strong>FOOTBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">⚽</div><div class="sport-footer"><strong>GIRLS<br>SOCCER</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">⚽</div><div class="sport-footer"><strong>BOYS<br>SOCCER</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🏐</div><div class="sport-footer"><strong>GIRLS<br>VOLLEYBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🏐</div><div class="sport-footer"><strong>BOYS<br>VOLLEYBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🏈</div><div class="sport-footer"><strong>GIRLS FLAG<br>FOOTBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">🥎</div><div class="sport-footer"><strong>GIRLS<br>SOFTBALL</strong></div></div>
+      <div class="sport coming"><div class="coming-label">COMING SOON</div><div class="sport-art">⚾</div><div class="sport-footer"><strong>BOYS<br>BASEBALL</strong></div></div>
+    </div>
+
+    <div class="lower-grid">
+      <section class="panel" id="conference-info">
+        <div class="panel-title"><span>📄</span><div><strong>CONFERENCE INFO</strong><small>GOVERNANCE. GUIDELINES. RESOURCES.</small></div></div>
+        <div class="panel-actions">
+          <button disabled>Constitution →</button>
+          <button disabled>Bylaws →</button>
+          <button disabled>Documents &amp; Policies →</button>
+        </div>
+      </section>
+
+      <section class="panel" id="administration">
+        <div class="panel-title"><span>👥</span><div><strong>ADMINISTRATION</strong><small>SECURE ACCESS FOR AUTHORIZED USERS.</small></div></div>
+        <div class="panel-actions">
+          <button disabled>Authorized User Login →</button>
+          <button disabled>Score &amp; Schedule Management →</button>
+          <button disabled>Admin Tools →</button>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div><strong>COMMONWEALTH MIDDLE SCHOOL ATHLETIC CONFERENCE</strong><small>STUDENT ATHLETES &nbsp; | &nbsp; STRONGER COMMUNITIES &nbsp; | &nbsp; A BRIGHTER TOMORROW</small></div>
+  <div class="kentucky">KENTUCKY STRONG</div>
+  <div class="footer-nav"><a href="index.html">Home</a><a href="#sports">Sports</a><a href="#conference-info">Conference Info</a><a href="#administration">Administration</a></div>
+</footer>
 </body>
 </html>

@@ -1,0 +1,1 @@
+Upload index.html, styles.css, girls-basketball.html, and the entire assets folder to the root of the CMSAC-Web GitHub repository. Vercel will redeploy automatically.
