@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girls Basketball Schedule & Results | CMSAC</title>
+  <meta name="description" content="CMSAC Girls Basketball Schedule and Results">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="CMSAC Home">
+    <img src="assets/cmsac-logo-banner.jpg" alt="CMSAC - Commonwealth Middle School Athletic Conference">
+  </a>
+
+  <nav class="topnav gb-nav" aria-label="Schedule navigation">
+    <a href="girls-basketball.html">← Girls Basketball</a>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<main class="gbs-page">
+
+  <section class="gbs-heading">
+    <div>
+      <span class="gbs-kicker">CMSAC GIRLS BASKETBALL</span>
+      <h1>Schedule &amp; Results</h1>
+      <p>
+        Conference schedule for 6th, 7th and 8th grade teams.
+        Games are grouped by school matchup to keep the full schedule easy to scan.
+      </p>
+    </div>
+
+    <div class="gbs-controls">
+      <label for="teamFilter">VIEW</label>
+      <select id="teamFilter" aria-label="Choose team schedule">
+        <option value="ALL" selected>ALL TEAMS</option>
+        <option value="6TH">6TH GRADE</option>
+        <option value="7TH">7TH GRADE</option>
+        <option value="8TH">8TH GRADE</option>
+      </select>
+
+      <button class="gbs-print" type="button" onclick="window.print()">
+        Print Schedule
+      </button>
+    </div>
+  </section>
+
+  <section class="gbs-preview-note" id="previewNote">
+    <strong>Layout Preview:</strong>
+    This page is ready for the CMSAC schedule feed. The sample matchups below are only here
+    so we can verify the design before connecting live conference data.
+  </section>
+
+  <section id="scheduleList" class="gbs-list" aria-live="polite"></section>
+
+  <section id="emptyState" class="gbs-empty" hidden>
+    No games are currently available for this team selection.
+  </section>
+
+</main>
+
+<script>
+  /*
+   * TEMPORARY PREVIEW DATA
+   * This will be removed when the page is connected to the CMSAC Apps Script API.
+   *
+   * IMPORTANT DESIGN RULE:
+   * One matchup card represents the school-vs-school date.
+   * Individual grade games remain separate records underneath that matchup.
+   * If a school does not field one grade team, that grade simply does not appear.
+   */
+  const matchups = [
+    {
+      id: "PREVIEW-001",
+      dateLabel: "TUESDAY, NOVEMBER 10",
+      away: "Madison",
+      home: "Estill County",
+      venue: "Estill County MS Gym",
+      status: "SCHEDULED",
+      games: [
+        { division: "6TH", time: "5:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
+        { division: "7TH", time: "6:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
+        { division: "8TH", time: "7:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null }
+      ]
+    },
+    {
+      id: "PREVIEW-002",
+      dateLabel: "THURSDAY, NOVEMBER 12",
+      away: "Foley",
+      home: "Clark-Moores",
+      venue: "Clark-Moores MS Gym",
+      status: "COMPLETED",
+      games: [
+        { division: "6TH", time: "5:30 PM", status: "COMPLETED", awayScore: 24, homeScore: 31 },
+        { division: "7TH", time: "6:30 PM", status: "COMPLETED", awayScore: 35, homeScore: 30 },
+        { division: "8TH", time: "7:30 PM", status: "COMPLETED", awayScore: 42, homeScore: 39 }
+      ]
+    },
+    {
+      id: "PREVIEW-003",
+      dateLabel: "MONDAY, NOVEMBER 16",
+      away: "Model",
+      home: "Garrard County",
+      venue: "Garrard County MS Gym",
+      status: "SCHEDULED",
+      games: [
+        { division: "6TH", time: "5:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
+        { division: "8TH", time: "7:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null }
+      ]
+    }
+  ];
+
+  const teamFilter = document.getElementById("teamFilter");
+  const scheduleList = document.getElementById("scheduleList");
+  const emptyState = document.getElementById("emptyState");
+
+  function statusClass(status) {
+    const clean = String(status || "").toUpperCase();
+    if (clean === "COMPLETED") return "completed";
+    if (clean === "CANCELLED") return "cancelled";
+    if (clean === "CLOSED") return "closed";
+    return "scheduled";
+  }
+
+  function renderGameRow(game, matchup) {
+    const isCompleted = game.status === "COMPLETED";
+    const score = isCompleted
+      ? `<div class="gbs-score">
+           <span>${matchup.away} <b>${game.awayScore}</b></span>
+           <span>${matchup.home} <b>${game.homeScore}</b></span>
+         </div>`
+      : `<div class="gbs-opponents">
+           <span>${matchup.away}</span>
+           <span class="gbs-at">@</span>
+           <span>${matchup.home}</span>
+         </div>`;
+
+    return `
+      <div class="gbs-game-row">
+        <div class="gbs-division">${game.division}</div>
+        <div class="gbs-time">${game.time || "TBA"}</div>
+        ${score}
+        <div class="gbs-game-status ${statusClass(game.status)}">${game.status}</div>
+      </div>
+    `;
+  }
+
+  function renderSchedule() {
+    const filter = teamFilter.value;
+    scheduleList.innerHTML = "";
+
+    let rendered = 0;
+
+    matchups.forEach(matchup => {
+      const visibleGames = matchup.games.filter(game =>
+        filter === "ALL" || game.division === filter
+      );
+
+      if (!visibleGames.length) return;
+      rendered++;
+
+      const card = document.createElement("article");
+      card.className = "gbs-matchup";
+
+      card.innerHTML = `
+        <div class="gbs-matchup-head">
+          <div class="gbs-date">${matchup.dateLabel}</div>
+
+          <div class="gbs-matchup-title">
+            <strong>${matchup.away}</strong>
+            <span>at</span>
+            <strong>${matchup.home}</strong>
+          </div>
+
+          <div class="gbs-venue">${matchup.venue}</div>
+        </div>
+
+        <div class="gbs-games">
+          ${visibleGames.map(game => renderGameRow(game, matchup)).join("")}
+        </div>
+      `;
+
+      scheduleList.appendChild(card);
+    });
+
+    emptyState.hidden = rendered !== 0;
+  }
+
+  teamFilter.addEventListener("change", renderSchedule);
+  renderSchedule();
+</script>
+
+</body>
+</html>
 
