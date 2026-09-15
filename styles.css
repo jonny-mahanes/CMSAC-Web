@@ -2689,3 +2689,189 @@ th{
     text-align:center;
   }
 }
+
+
+/* ============================================================
+   CMSAC ADMIN - MOBILE WIDTH HARDENING
+   Prevents slight page-level horizontal overflow on phones.
+   ============================================================ */
+
+.cmsac-admin-page,
+.cmsac-admin-card,
+.cmsac-info-card,
+.cmsac-admin-login,
+.cmsac-admin-tool,
+.cmsac-admin-game-panel,
+.cmsac-admin-current-result,
+.cmsac-admin-correction-panel,
+.cmsac-admin-success{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+}
+
+.cmsac-admin-page{
+  overflow-x:hidden;
+}
+
+.cmsac-admin-login-row,
+.cmsac-admin-filter-grid,
+.cmsac-admin-current-grid,
+.cmsac-admin-current-detail,
+.cmsac-admin-score-grid,
+.cmsac-admin-success-grid{
+  min-width:0;
+  max-width:100%;
+}
+
+.cmsac-admin-login-row > *,
+.cmsac-admin-filter-grid > *,
+.cmsac-admin-current-grid > *,
+.cmsac-admin-current-detail > *,
+.cmsac-admin-score-grid > *,
+.cmsac-admin-success-grid > *{
+  min-width:0;
+  max-width:100%;
+}
+
+.cmsac-admin-page input,
+.cmsac-admin-page select,
+.cmsac-admin-page button{
+  width:100%;
+  max-width:100%;
+}
+
+.cmsac-admin-mode-banner{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+}
+
+.cmsac-admin-mode-banner strong,
+.cmsac-admin-section-head p,
+.cmsac-admin-warning,
+.cmsac-admin-current-detail strong,
+.cmsac-admin-success-grid strong{
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.cmsac-admin-current-grid strong{
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+@media(max-width:700px){
+
+  .cmsac-admin-page{
+    width:100%;
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .cmsac-admin-card,
+  .cmsac-info-card{
+    width:100%;
+  }
+
+  .cmsac-admin-login,
+  .cmsac-admin-tool{
+    width:100%;
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .cmsac-admin-login-row,
+  .cmsac-admin-score-grid,
+  .cmsac-admin-current-detail,
+  .cmsac-admin-success-grid{
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  .cmsac-admin-current-grid{
+    grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);
+    gap:6px;
+  }
+
+  .cmsac-admin-current-grid > div{
+    min-width:0;
+  }
+
+  .cmsac-admin-current-grid strong{
+    font-size:10px;
+    line-height:1.2;
+  }
+
+  .cmsac-admin-current-grid b{
+    font-size:22px;
+  }
+
+  .cmsac-admin-current-divider{
+    width:30px;
+    text-align:center;
+  }
+
+  .cmsac-admin-mode-banner{
+    flex-wrap:wrap;
+  }
+
+  .cmsac-admin-exit-button{
+    width:auto;
+    max-width:100%;
+  }
+
+  .cmsac-admin-warning{
+    width:100%;
+  }
+}
+
+@media(max-width:430px){
+
+  .cmsac-admin-page{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .cmsac-admin-login,
+  .cmsac-admin-tool{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .cmsac-admin-heading h1{
+    font-size:29px;
+  }
+
+  .cmsac-admin-section-head h2{
+    font-size:21px;
+  }
+
+  .cmsac-admin-current-grid{
+    grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);
+    gap:4px;
+  }
+
+  .cmsac-admin-current-divider{
+    width:26px;
+    font-size:8px;
+  }
+
+  .cmsac-admin-current-grid strong{
+    font-size:9px;
+  }
+
+  .cmsac-admin-current-grid b{
+    font-size:20px;
+  }
+
+  .cmsac-admin-game-meta{
+    gap:5px;
+  }
+
+  .cmsac-admin-game-meta span{
+    font-size:8px;
+    padding:4px 7px;
+  }
+}
