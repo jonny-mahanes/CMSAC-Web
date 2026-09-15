@@ -1807,3 +1807,29 @@ body{
     margin:0;
   }
 }
+
+
+/* ============================================================
+   CMSAC REPORT SCORE - SHARED PASSCODE / SCHOOL SELECTOR
+   ============================================================ */
+
+.gbr-access-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;
+  align-items:end;
+  gap:10px;
+}
+
+.gbr-access-grid .gbr-primary-button{
+  min-width:110px;
+}
+
+@media(max-width:760px){
+  .gbr-access-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gbr-access-grid .gbr-primary-button{
+    width:100%;
+  }
+}
