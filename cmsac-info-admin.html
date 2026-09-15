@@ -506,9 +506,14 @@
 
 
   async function loadScheduleData() {
+    const refreshUrl =
+      SCHEDULE_URL +
+      "&_=" +
+      Date.now();
+
     const response =
       await fetch(
-        SCHEDULE_URL,
+        refreshUrl,
         {
           method: "GET",
           cache: "no-store"
@@ -1004,8 +1009,9 @@
         result.resultVerificationStatus ||
         "AD OVERRIDE";
 
-      await loadScheduleData();
-
+      // The override has already succeeded at this point.
+      // Show success immediately so a later refresh problem is not
+      // mistaken for a failed administrative correction.
       adminGamePanel.hidden = true;
       adminSuccessPanel.hidden = false;
 
@@ -1013,6 +1019,18 @@
         behavior: "smooth",
         block: "center"
       });
+
+      // Refresh schedule/results as a secondary, non-critical step.
+      // A transient mobile fetch failure should never replace the
+      // successful override confirmation with an error.
+      try {
+        await loadScheduleData();
+      } catch (refreshError) {
+        console.warn(
+          "Override succeeded, but schedule refresh failed:",
+          refreshError
+        );
+      }
 
     } catch (error) {
       showMessage(
