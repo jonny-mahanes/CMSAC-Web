@@ -1,1 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girls Basketball Standings | CMSAC</title>
+  <meta name="description" content="CMSAC Girls Basketball Standings">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="CMSAC Home">
+    <img src="assets/cmsac-logo-banner.jpg" alt="CMSAC - Commonwealth Middle School Athletic Conference">
+  </a>
+
+  <nav class="topnav gb-nav" aria-label="Standings navigation">
+    <a href="girls-basketball.html">← Girls Basketball</a>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<main class="gbst-page">
+
+  <section class="gbs-heading gbst-heading">
+    <div>
+      <span class="gbs-kicker">CMSAC GIRLS BASKETBALL</span>
+      <h1>Conference Standings</h1>
+      <p id="standingsSubtitle">
+        Loading current conference standings...
+      </p>
+    </div>
+
+    <button class="gbs-print" type="button" onclick="window.print()">
+      Print Standings
+    </button>
+  </section>
+
+  <section class="gbs-api-status" id="standingsStatus">
+    Loading live CMSAC standings...
+  </section>
+
+  <section id="standingsContainer" class="gbst-container" aria-live="polite"></section>
+
+  <section id="standingsEmpty" class="gbs-empty" hidden>
+    Standings are not currently available.
+  </section>
+
+</main>
+
+<script>
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbxxOoHFjaBhHs46Jq3-9cikIg7SKXUkDHMw0EpRlmg7Dz0sW35w4Fy1luoRZU9FJEFS/exec?action=girlsBasketballStandings";
+
+  const container =
+    document.getElementById("standingsContainer");
+
+  const statusBox =
+    document.getElementById("standingsStatus");
+
+  const emptyState =
+    document.getElementById("standingsEmpty");
+
+  const subtitle =
+    document.getElementById("standingsSubtitle");
+
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+
+  function divisionLabel(value) {
+    const clean = String(value || "").toUpperCase();
+
+    if (clean === "6TH") return "6th Grade";
+    if (clean === "7TH") return "7th Grade";
+    if (clean === "8TH") return "8th Grade";
+
+    return clean || "Division";
+  }
+
+
+  function seedCell(row) {
+    if (
+      row.seed === null ||
+      row.seed === undefined ||
+      row.seed === ""
+    ) {
+      return '<span class="gbst-no-seed">—</span>';
+    }
+
+    return `
+      <span class="gbst-seed">
+        ${escapeHtml(row.seed)}
+      </span>
+    `;
+  }
+
+
+  function pctText(value) {
+    const text = String(value ?? "").trim();
+
+    if (!text) return "—";
+
+    const number = Number(text);
+
+    if (!Number.isNaN(number)) {
+      return number.toFixed(3);
+    }
+
+    return text;
+  }
+
+
+  function buildDivisionSection(division, rows) {
+
+    const section =
+      document.createElement("section");
+
+    section.className = "gbst-division";
+
+    const bodyRows =
+      rows.map(row => `
+        <tr>
+          <td class="gbst-seed-cell">${seedCell(row)}</td>
+          <td class="gbst-school">${escapeHtml(row.school)}</td>
+          <td>${escapeHtml(row.gamesPlayed)}</td>
+          <td>${escapeHtml(row.wins)}</td>
+          <td>${escapeHtml(row.losses)}</td>
+          <td>${escapeHtml(pctText(row.winPct))}</td>
+          <td>${escapeHtml(row.pointsFor)}</td>
+          <td>${escapeHtml(row.pointsAgainst)}</td>
+          <td>${escapeHtml(row.pointDifferential)}</td>
+        </tr>
+      `).join("");
+
+    section.innerHTML = `
+      <div class="gbst-division-head">
+        <div>
+          <span>DIVISION</span>
+          <h2>${escapeHtml(divisionLabel(division))}</h2>
+        </div>
+        <div class="gbst-record-note">
+          Conference seeding standings
+        </div>
+      </div>
+
+      <div class="gbst-table-wrap">
+        <table class="gbst-table">
+          <thead>
+            <tr>
+              <th>SEED</th>
+              <th class="gbst-school">SCHOOL</th>
+              <th>GP</th>
+              <th>W</th>
+              <th>L</th>
+              <th>WIN %</th>
+              <th>PF</th>
+              <th>PA</th>
+              <th>DIFF</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bodyRows}
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    return section;
+  }
+
+
+  async function loadStandings() {
+
+    try {
+
+      statusBox.className =
+        "gbs-api-status loading";
+
+      statusBox.textContent =
+        "Loading live CMSAC standings...";
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          "Standings service returned HTTP " +
+          response.status
+        );
+      }
+
+      const payload =
+        await response.json();
+
+      if (!payload || payload.ok !== true) {
+        throw new Error(
+          payload && payload.error
+            ? payload.error
+            : "Standings service did not return a valid response."
+        );
+      }
+
+      const rows =
+        Array.isArray(payload.standings)
+          ? payload.standings
+          : [];
+
+      const divisions =
+        Array.isArray(payload.divisions)
+          ? payload.divisions
+          : ["6TH","7TH","8TH"];
+
+      const seasons =
+        Array.isArray(payload.seasons)
+          ? payload.seasons
+          : [];
+
+      container.innerHTML = "";
+
+      divisions.forEach(division => {
+
+        const divisionRows =
+          rows.filter(
+            row =>
+              String(row.division || "").toUpperCase() ===
+              division
+          );
+
+        if (!divisionRows.length) return;
+
+        container.appendChild(
+          buildDivisionSection(
+            division,
+            divisionRows
+          )
+        );
+      });
+
+      const seasonText =
+        seasons.length
+          ? seasons.join(", ")
+          : "Current Season";
+
+      subtitle.textContent =
+        seasonText +
+        " standings for 6th, 7th and 8th grade conference play.";
+
+      statusBox.className =
+        "gbs-api-status ready";
+
+      statusBox.textContent =
+        "Live CMSAC standings • " +
+        rows.length +
+        " team records loaded";
+
+      emptyState.hidden =
+        rows.length !== 0;
+
+    } catch (error) {
+
+      console.error(error);
+
+      statusBox.className =
+        "gbs-api-status error";
+
+      statusBox.textContent =
+        "The live standings could not be loaded. Please refresh the page or try again shortly.";
+
+      container.innerHTML = "";
+      emptyState.hidden = true;
+    }
+  }
+
+
+  loadStandings();
+</script>
+
+</body>
+</html>
 
