@@ -129,6 +129,47 @@
 
         <div id="submitMessage" class="gbr-message" hidden></div>
       </div>
+
+      <div id="successPanel" class="gbr-success-panel" hidden>
+        <div class="gbr-success-icon">✓</div>
+
+        <div class="gbr-success-copy">
+          <span class="gbr-success-kicker">SUBMISSION COMPLETE</span>
+          <h3>Score Submitted Successfully</h3>
+
+          <div class="gbr-success-summary">
+            <div>
+              <span>REPRESENTING</span>
+              <strong id="successSchool"></strong>
+            </div>
+
+            <div>
+              <span>GAME</span>
+              <strong id="successGame"></strong>
+            </div>
+
+            <div>
+              <span>FINAL SCORE</span>
+              <strong id="successScore"></strong>
+            </div>
+
+            <div>
+              <span>STATUS</span>
+              <strong id="successStatus"></strong>
+            </div>
+          </div>
+
+          <div class="gbr-success-actions">
+            <button id="anotherScoreButton" class="gbr-secondary-button" type="button">
+              Submit Another Score
+            </button>
+
+            <a class="gbr-link-button" href="girls-basketball.html">
+              Back to Girls Basketball
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </section>
@@ -197,6 +238,24 @@
 
   const submitMessage =
     document.getElementById("submitMessage");
+
+  const successPanel =
+    document.getElementById("successPanel");
+
+  const successSchool =
+    document.getElementById("successSchool");
+
+  const successGame =
+    document.getElementById("successGame");
+
+  const successScore =
+    document.getElementById("successScore");
+
+  const successStatus =
+    document.getElementById("successStatus");
+
+  const anotherScoreButton =
+    document.getElementById("anotherScoreButton");
 
   let verifiedScoreEntryCode = "";
   let verifiedSchool = "";
@@ -505,6 +564,8 @@
 
 
   async function verifyAccess() {
+    successPanel.hidden = true;
+
     clearMessage(
       accessMessage
     );
@@ -606,6 +667,27 @@
       verifyButton.textContent =
         "Continue";
     }
+  }
+
+
+  function resetForAnotherScore() {
+    successPanel.hidden = true;
+    gameDetails.hidden = true;
+    clearMessage(submitMessage);
+
+    gameSelect.value = "";
+    awayScoreInput.value = "";
+    homeScoreInput.value = "";
+
+    submitButton.disabled = false;
+    submitButton.textContent =
+      "Submit Final Score";
+
+    gameSelect.disabled = false;
+    awayScoreInput.disabled = false;
+    homeScoreInput.disabled = false;
+
+    gameSelect.focus();
   }
 
 
@@ -727,21 +809,49 @@
         );
       }
 
-      showMessage(
-        submitMessage,
-        "success",
-        result.message ||
-        "Score submitted successfully."
-      );
-
       await loadScheduleData();
       buildGameChoices();
 
-      gameSelect.value =
-        result.gameId ||
-        game.gameId;
+      gameSelect.disabled = true;
+      awayScoreInput.disabled = true;
+      homeScoreInput.disabled = true;
 
-      showSelectedGame();
+      submitButton.disabled = true;
+      submitButton.textContent =
+        "Submitted";
+
+      clearMessage(submitMessage);
+
+      successSchool.textContent =
+        verifiedSchool;
+
+      successGame.textContent =
+        game.awaySchool +
+        " at " +
+        game.homeSchool +
+        " • " +
+        game.division;
+
+      successScore.textContent =
+        game.awaySchool +
+        " " +
+        awayScore +
+        " – " +
+        homeScore +
+        " " +
+        game.homeSchool;
+
+      successStatus.textContent =
+        result.resultVerificationStatus ||
+        result.message ||
+        "Accepted";
+
+      successPanel.hidden = false;
+
+      successPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
 
     } catch (error) {
       showMessage(
@@ -783,6 +893,11 @@
   submitButton.addEventListener(
     "click",
     submitScore
+  );
+
+  anotherScoreButton.addEventListener(
+    "click",
+    resetForAnotherScore
   );
 
 
