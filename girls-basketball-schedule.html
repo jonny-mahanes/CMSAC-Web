@@ -26,35 +26,23 @@
     <div>
       <span class="gbs-kicker">CMSAC GIRLS BASKETBALL</span>
       <h1>Schedule &amp; Results</h1>
-      <p>
-        Conference schedule for 6th, 7th and 8th grade teams.
-        Games are grouped by school matchup to keep the full schedule easy to scan.
+      <p id="scheduleSubtitle">
+        Loading the current conference schedule...
       </p>
     </div>
 
     <div class="gbs-controls">
       <div class="gbs-filter-group">
         <label for="schoolFilter">SCHOOL</label>
-        <select id="schoolFilter" aria-label="Choose school schedule">
+        <select id="schoolFilter" aria-label="Choose school schedule" disabled>
           <option value="ALL" selected>ALL SCHOOLS</option>
-          <option value="Estill County">ESTILL COUNTY</option>
-          <option value="Garrard County">GARRARD COUNTY</option>
-          <option value="Farristown">FARRISTOWN</option>
-          <option value="Foley">FOLEY</option>
-          <option value="Madison">MADISON</option>
-          <option value="Caudill">CAUDILL</option>
-          <option value="Clark-Moores">CLARK-MOORES</option>
-          <option value="Model">MODEL</option>
         </select>
       </div>
 
       <div class="gbs-filter-group">
         <label for="teamFilter">TEAM</label>
-        <select id="teamFilter" aria-label="Choose team schedule">
+        <select id="teamFilter" aria-label="Choose team schedule" disabled>
           <option value="ALL" selected>ALL TEAMS</option>
-          <option value="6TH">6TH GRADE</option>
-          <option value="7TH">7TH GRADE</option>
-          <option value="8TH">8TH GRADE</option>
         </select>
       </div>
 
@@ -64,159 +52,431 @@
     </div>
   </section>
 
-  <section class="gbs-preview-note" id="previewNote">
-    <strong>Layout Preview:</strong>
-    This page is ready for the CMSAC schedule feed. The sample matchups below are only here
-    so we can verify the design before connecting live conference data.
+  <section class="gbs-api-status" id="apiStatus">
+    Loading live CMSAC schedule data...
   </section>
 
   <section id="scheduleList" class="gbs-list" aria-live="polite"></section>
 
   <section id="emptyState" class="gbs-empty" hidden>
-    No games are currently available for this team selection.
+    No games are currently available for this school/team selection.
   </section>
 
 </main>
 
 <script>
-  /*
-   * TEMPORARY PREVIEW DATA
-   * This will be removed when the page is connected to the CMSAC Apps Script API.
-   *
-   * IMPORTANT DESIGN RULE:
-   * One matchup card represents the school-vs-school date.
-   * Individual grade games remain separate records underneath that matchup.
-   * If a school does not field one grade team, that grade simply does not appear.
-   */
-  const matchups = [
-    {
-      id: "PREVIEW-001",
-      dateLabel: "TUESDAY, NOVEMBER 10",
-      away: "Madison",
-      home: "Estill County",
-      venue: "Estill County MS Gym",
-      status: "SCHEDULED",
-      games: [
-        { division: "6TH", time: "5:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
-        { division: "7TH", time: "6:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
-        { division: "8TH", time: "7:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null }
-      ]
-    },
-    {
-      id: "PREVIEW-002",
-      dateLabel: "THURSDAY, NOVEMBER 12",
-      away: "Foley",
-      home: "Clark-Moores",
-      venue: "Clark-Moores MS Gym",
-      status: "COMPLETED",
-      games: [
-        { division: "6TH", time: "5:30 PM", status: "COMPLETED", awayScore: 24, homeScore: 31 },
-        { division: "7TH", time: "6:30 PM", status: "COMPLETED", awayScore: 35, homeScore: 30 },
-        { division: "8TH", time: "7:30 PM", status: "COMPLETED", awayScore: 42, homeScore: 39 }
-      ]
-    },
-    {
-      id: "PREVIEW-003",
-      dateLabel: "MONDAY, NOVEMBER 16",
-      away: "Model",
-      home: "Garrard County",
-      venue: "Garrard County MS Gym",
-      status: "SCHEDULED",
-      games: [
-        { division: "6TH", time: "5:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null },
-        { division: "8TH", time: "7:30 PM", status: "SCHEDULED", awayScore: null, homeScore: null }
-      ]
-    }
-  ];
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbxxOoHFjaBhHs46Jq3-9cikIg7SKXUkDHMw0EpRlmg7Dz0sW35w4Fy1luoRZU9FJEFS/exec?action=girlsBasketballSchedule";
 
-  const schoolFilter = document.getElementById("schoolFilter");
-  const teamFilter = document.getElementById("teamFilter");
-  const scheduleList = document.getElementById("scheduleList");
-  const emptyState = document.getElementById("emptyState");
+  const schoolFilter =
+    document.getElementById("schoolFilter");
+
+  const teamFilter =
+    document.getElementById("teamFilter");
+
+  const scheduleList =
+    document.getElementById("scheduleList");
+
+  const emptyState =
+    document.getElementById("emptyState");
+
+  const apiStatus =
+    document.getElementById("apiStatus");
+
+  const scheduleSubtitle =
+    document.getElementById("scheduleSubtitle");
+
+  let scheduleData = {
+    schools: [],
+    divisions: [],
+    seasons: [],
+    games: []
+  };
+
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+
+  function divisionLabel(value) {
+    const clean = String(value || "").toUpperCase();
+
+    if (clean === "6TH") return "6TH GRADE";
+    if (clean === "7TH") return "7TH GRADE";
+    if (clean === "8TH") return "8TH GRADE";
+
+    return clean || "TEAM";
+  }
+
 
   function statusClass(status) {
     const clean = String(status || "").toUpperCase();
+
     if (clean === "COMPLETED") return "completed";
     if (clean === "CANCELLED") return "cancelled";
     if (clean === "CLOSED") return "closed";
+
     return "scheduled";
   }
 
+
+  function parseCmsacDate(value) {
+    const text = String(value || "").trim();
+
+    const match =
+      text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+
+    if (!match) {
+      const fallback = new Date(text);
+      return Number.isNaN(fallback.getTime())
+        ? null
+        : fallback;
+    }
+
+    let year = Number(match[3]);
+
+    if (year < 100) {
+      year += 2000;
+    }
+
+    return new Date(
+      year,
+      Number(match[1]) - 1,
+      Number(match[2])
+    );
+  }
+
+
+  function formatDateLabel(value) {
+    const date = parseCmsacDate(value);
+
+    if (!date) {
+      return String(value || "").toUpperCase();
+    }
+
+    return date
+      .toLocaleDateString(
+        "en-US",
+        {
+          weekday: "long",
+          month: "long",
+          day: "numeric"
+        }
+      )
+      .toUpperCase();
+  }
+
+
+  function buildFilters() {
+    schoolFilter.innerHTML =
+      '<option value="ALL">ALL SCHOOLS</option>';
+
+    (scheduleData.schools || []).forEach(school => {
+      const option = document.createElement("option");
+      option.value = school;
+      option.textContent = school.toUpperCase();
+      schoolFilter.appendChild(option);
+    });
+
+    teamFilter.innerHTML =
+      '<option value="ALL">ALL TEAMS</option>';
+
+    (scheduleData.divisions || []).forEach(division => {
+      const option = document.createElement("option");
+      option.value = division;
+      option.textContent = divisionLabel(division);
+      teamFilter.appendChild(option);
+    });
+
+    schoolFilter.disabled = false;
+    teamFilter.disabled = false;
+  }
+
+
+  function groupGames(games) {
+    const groups = new Map();
+
+    games.forEach(game => {
+      const key =
+        game.plannerMatchupId ||
+        [
+          game.gameDate,
+          game.awaySchool,
+          game.homeSchool
+        ].join("|");
+
+      if (!groups.has(key)) {
+        groups.set(
+          key,
+          {
+            id: key,
+            date: game.gameDate,
+            away: game.awaySchool,
+            home: game.homeSchool,
+            venue: game.venue || "",
+            games: []
+          }
+        );
+      }
+
+      groups.get(key).games.push(game);
+    });
+
+    const divisionOrder = {
+      "6TH": 1,
+      "7TH": 2,
+      "8TH": 3
+    };
+
+    return Array.from(groups.values())
+      .map(group => {
+        group.games.sort(
+          (a, b) =>
+            (divisionOrder[a.division] || 99) -
+            (divisionOrder[b.division] || 99)
+        );
+
+        return group;
+      });
+  }
+
+
   function renderGameRow(game, matchup) {
-    const isCompleted = game.status === "COMPLETED";
-    const score = isCompleted
-      ? `<div class="gbs-score">
-           <span>${matchup.away} <b>${game.awayScore}</b></span>
-           <span>${matchup.home} <b>${game.homeScore}</b></span>
-         </div>`
-      : `<div class="gbs-opponents">
-           <span>${matchup.away}</span>
-           <span class="gbs-at">@</span>
-           <span>${matchup.home}</span>
-         </div>`;
+    const completed =
+      String(game.gameStatus || "").toUpperCase() ===
+      "COMPLETED";
+
+    const hasScore =
+      game.awayScore !== null &&
+      game.awayScore !== undefined &&
+      game.homeScore !== null &&
+      game.homeScore !== undefined;
+
+    let middleContent = "";
+
+    if (completed && hasScore) {
+      middleContent = `
+        <div class="gbs-score">
+          <span>
+            ${escapeHtml(matchup.away)}
+            <b>${escapeHtml(game.awayScore)}</b>
+          </span>
+          <span>
+            ${escapeHtml(matchup.home)}
+            <b>${escapeHtml(game.homeScore)}</b>
+          </span>
+        </div>
+      `;
+    } else {
+      middleContent = `
+        <div class="gbs-opponents">
+          <span>${escapeHtml(matchup.away)}</span>
+          <span class="gbs-at">@</span>
+          <span>${escapeHtml(matchup.home)}</span>
+        </div>
+      `;
+    }
 
     return `
       <div class="gbs-game-row">
-        <div class="gbs-division">${game.division}</div>
-        <div class="gbs-time">${game.time || "TBA"}</div>
-        ${score}
-        <div class="gbs-game-status ${statusClass(game.status)}">${game.status}</div>
+        <div class="gbs-division">
+          ${escapeHtml(game.division)}
+        </div>
+
+        <div class="gbs-time">
+          ${escapeHtml(game.gameTime || "TBA")}
+        </div>
+
+        ${middleContent}
+
+        <div class="gbs-game-status ${statusClass(game.gameStatus)}">
+          ${escapeHtml(game.gameStatus || "SCHEDULED")}
+        </div>
       </div>
     `;
   }
 
+
   function renderSchedule() {
-    const selectedSchool = schoolFilter.value;
-    const selectedTeam = teamFilter.value;
+    const selectedSchool =
+      schoolFilter.value;
+
+    const selectedTeam =
+      teamFilter.value;
+
+    const filteredGames =
+      (scheduleData.games || []).filter(game => {
+        const schoolMatches =
+          selectedSchool === "ALL" ||
+          game.awaySchool === selectedSchool ||
+          game.homeSchool === selectedSchool;
+
+        const teamMatches =
+          selectedTeam === "ALL" ||
+          game.division === selectedTeam;
+
+        return schoolMatches && teamMatches;
+      });
+
+    const matchups =
+      groupGames(filteredGames);
+
     scheduleList.innerHTML = "";
 
-    let rendered = 0;
-
     matchups.forEach(matchup => {
-      const schoolMatches =
-        selectedSchool === "ALL" ||
-        matchup.away === selectedSchool ||
-        matchup.home === selectedSchool;
+      const card =
+        document.createElement("article");
 
-      if (!schoolMatches) return;
-
-      const visibleGames = matchup.games.filter(game =>
-        selectedTeam === "ALL" || game.division === selectedTeam
-      );
-
-      if (!visibleGames.length) return;
-      rendered++;
-
-      const card = document.createElement("article");
       card.className = "gbs-matchup";
 
       card.innerHTML = `
         <div class="gbs-matchup-head">
-          <div class="gbs-date">${matchup.dateLabel}</div>
-
-          <div class="gbs-matchup-title">
-            <strong>${matchup.away}</strong>
-            <span>at</span>
-            <strong>${matchup.home}</strong>
+          <div class="gbs-date">
+            ${escapeHtml(formatDateLabel(matchup.date))}
           </div>
 
-          <div class="gbs-venue">${matchup.venue}</div>
+          <div class="gbs-matchup-title">
+            <strong>${escapeHtml(matchup.away)}</strong>
+            <span>at</span>
+            <strong>${escapeHtml(matchup.home)}</strong>
+          </div>
+
+          <div class="gbs-venue">
+            ${escapeHtml(matchup.venue || "Venue TBA")}
+          </div>
         </div>
 
         <div class="gbs-games">
-          ${visibleGames.map(game => renderGameRow(game, matchup)).join("")}
+          ${
+            matchup.games
+              .map(game => renderGameRow(game, matchup))
+              .join("")
+          }
         </div>
       `;
 
       scheduleList.appendChild(card);
     });
 
-    emptyState.hidden = rendered !== 0;
+    emptyState.hidden =
+      matchups.length !== 0;
   }
 
-  schoolFilter.addEventListener("change", renderSchedule);
-  teamFilter.addEventListener("change", renderSchedule);
-  renderSchedule();
+
+  async function loadSchedule() {
+    try {
+      apiStatus.className =
+        "gbs-api-status loading";
+
+      apiStatus.textContent =
+        "Loading live CMSAC schedule data...";
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          "Schedule service returned HTTP " +
+          response.status
+        );
+      }
+
+      const payload =
+        await response.json();
+
+      if (!payload || payload.ok !== true) {
+        throw new Error(
+          payload && payload.error
+            ? payload.error
+            : "Schedule service did not return a valid response."
+        );
+      }
+
+      scheduleData = {
+        schools:
+          Array.isArray(payload.schools)
+            ? payload.schools
+            : [],
+
+        divisions:
+          Array.isArray(payload.divisions)
+            ? payload.divisions
+            : ["6TH", "7TH", "8TH"],
+
+        seasons:
+          Array.isArray(payload.seasons)
+            ? payload.seasons
+            : [],
+
+        games:
+          Array.isArray(payload.games)
+            ? payload.games
+            : []
+      };
+
+      buildFilters();
+
+      const seasonText =
+        scheduleData.seasons.length
+          ? scheduleData.seasons.join(", ")
+          : "Current Season";
+
+      scheduleSubtitle.textContent =
+        seasonText +
+        " conference schedule for 6th, 7th and 8th grade teams. " +
+        "Use the School and Team filters only when you want to narrow the schedule.";
+
+      apiStatus.className =
+        "gbs-api-status ready";
+
+      apiStatus.textContent =
+        "Live CMSAC schedule • " +
+        scheduleData.games.length +
+        " individual game records loaded";
+
+      renderSchedule();
+
+    } catch (error) {
+      console.error(error);
+
+      schoolFilter.disabled = true;
+      teamFilter.disabled = true;
+
+      apiStatus.className =
+        "gbs-api-status error";
+
+      apiStatus.textContent =
+        "The live schedule could not be loaded. Please refresh the page or try again shortly.";
+
+      scheduleList.innerHTML = "";
+      emptyState.hidden = true;
+    }
+  }
+
+
+  schoolFilter.addEventListener(
+    "change",
+    renderSchedule
+  );
+
+  teamFilter.addEventListener(
+    "change",
+    renderSchedule
+  );
+
+  loadSchedule();
 </script>
 
 </body>
