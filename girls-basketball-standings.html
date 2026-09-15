@@ -31,9 +31,21 @@
       </p>
     </div>
 
-    <button class="gbs-print" type="button" onclick="window.print()">
-      Print Standings
-    </button>
+    <div class="gbst-controls">
+      <div class="gbs-filter-group">
+        <label for="divisionFilter">TEAM</label>
+        <select id="divisionFilter" aria-label="Choose standings division">
+          <option value="ALL" selected>ALL TEAMS</option>
+          <option value="6TH">6TH GRADE</option>
+          <option value="7TH">7TH GRADE</option>
+          <option value="8TH">8TH GRADE</option>
+        </select>
+      </div>
+
+      <button class="gbs-print" type="button" onclick="window.print()">
+        Print Standings
+      </button>
+    </div>
   </section>
 
   <section class="gbs-api-status" id="standingsStatus">
@@ -63,6 +75,15 @@
 
   const subtitle =
     document.getElementById("standingsSubtitle");
+
+  const divisionFilter =
+    document.getElementById("divisionFilter");
+
+  let standingsPayload = {
+    rows: [],
+    divisions: ["6TH","7TH","8TH"],
+    seasons: []
+  };
 
 
   function escapeHtml(value) {
@@ -177,6 +198,54 @@
   }
 
 
+  function renderStandings() {
+
+    const selectedDivision =
+      divisionFilter.value;
+
+    const rows =
+      standingsPayload.rows || [];
+
+    const divisions =
+      standingsPayload.divisions || ["6TH","7TH","8TH"];
+
+    container.innerHTML = "";
+
+    const visibleDivisions =
+      selectedDivision === "ALL"
+        ? divisions
+        : divisions.filter(
+            division => division === selectedDivision
+          );
+
+    let renderedRows = 0;
+
+    visibleDivisions.forEach(division => {
+
+      const divisionRows =
+        rows.filter(
+          row =>
+            String(row.division || "").toUpperCase() ===
+            division
+        );
+
+      if (!divisionRows.length) return;
+
+      renderedRows += divisionRows.length;
+
+      container.appendChild(
+        buildDivisionSection(
+          division,
+          divisionRows
+        )
+      );
+    });
+
+    emptyState.hidden =
+      renderedRows !== 0;
+  }
+
+
   async function loadStandings() {
 
     try {
@@ -229,26 +298,11 @@
           ? payload.seasons
           : [];
 
-      container.innerHTML = "";
-
-      divisions.forEach(division => {
-
-        const divisionRows =
-          rows.filter(
-            row =>
-              String(row.division || "").toUpperCase() ===
-              division
-          );
-
-        if (!divisionRows.length) return;
-
-        container.appendChild(
-          buildDivisionSection(
-            division,
-            divisionRows
-          )
-        );
-      });
+      standingsPayload = {
+        rows: rows,
+        divisions: divisions,
+        seasons: seasons
+      };
 
       const seasonText =
         seasons.length
@@ -267,8 +321,7 @@
         rows.length +
         " team records loaded";
 
-      emptyState.hidden =
-        rows.length !== 0;
+      renderStandings();
 
     } catch (error) {
 
@@ -286,9 +339,13 @@
   }
 
 
+  divisionFilter.addEventListener(
+    "change",
+    renderStandings
+  );
+
   loadStandings();
 </script>
 
 </body>
 </html>
-
