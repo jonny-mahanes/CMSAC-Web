@@ -809,20 +809,6 @@ body{
   background:var(--navy2);
 }
 
-.gbs-preview-note{
-  margin:0 0 14px;
-  padding:9px 12px;
-  border:1px solid #f0d4a0;
-  border-radius:7px;
-  background:#fff9ec;
-  color:#7b6641;
-  font-size:10px;
-  line-height:1.45;
-}
-
-.gbs-preview-note strong{
-  color:#6c5125;
-}
 
 .gbs-list{
   display:grid;
@@ -1097,5 +1083,43 @@ body{
   .gbs-matchup{
     break-inside:avoid;
     box-shadow:none;
+  }
+}
+
+
+/* LIVE API STATUS ------------------------------------------------ */
+
+.gbs-api-status{
+  margin:0 0 14px;
+  padding:8px 12px;
+  border-radius:7px;
+  font-size:10px;
+  line-height:1.4;
+  border:1px solid #d5e0eb;
+  background:#f5f8fb;
+  color:#64788e;
+}
+
+.gbs-api-status.loading{
+  border-color:#d5e0eb;
+  background:#f5f8fb;
+  color:#64788e;
+}
+
+.gbs-api-status.ready{
+  border-color:#cfe5d5;
+  background:#eef8f1;
+  color:#39704a;
+}
+
+.gbs-api-status.error{
+  border-color:#efc9cf;
+  background:#fff0f2;
+  color:#9b2b3a;
+}
+
+@media print{
+  .gbs-api-status{
+    display:none !important;
   }
 }
