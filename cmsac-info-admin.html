@@ -1,26 +1,1064 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CMSAC Info & Admin Tools</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMSAC Administration</title>
+  <meta name="description" content="CMSAC conference administration tools">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <header class="topbar">
-  <a class="brand" href="index.html"><img src="assets/cmsac-logo-banner.jpg" alt="CMSAC"></a>
-  <nav class="topnav"><a href="index.html">← Back</a><a href="index.html">Home</a></nav>
+  <a class="brand" href="index.html" aria-label="CMSAC Home">
+    <img src="assets/cmsac-logo-banner.jpg" alt="CMSAC - Commonwealth Middle School Athletic Conference">
+  </a>
+
+  <nav class="topnav" aria-label="Administration navigation">
+    <a href="index.html">Home</a>
+    <a href="girls-basketball.html">Girls Basketball</a>
+  </nav>
 </header>
-<main style="max-width:1050px;margin:40px auto;padding:20px">
-  <section id="conference-info" style="background:white;border:1px solid #d8e2ec;border-radius:12px;padding:22px;margin-bottom:18px">
-    <h1 style="color:#052f62">CMSAC Information</h1>
-    <p>Constitution, bylaws, conference documents and additional resources will live here.</p>
+
+<main class="cmsac-admin-page" id="administration">
+
+  <section class="cmsac-admin-heading">
+    <span class="gbs-kicker">CMSAC INFO &amp; ADMIN TOOLS</span>
+    <h1>Conference Administration</h1>
+    <p>
+      Administrative correction tools are restricted to authorized CMSAC
+      athletic directors and conference administrators.
+    </p>
   </section>
-  <section id="administration" style="background:white;border:1px solid #d8e2ec;border-radius:12px;padding:22px">
-    <h1 style="color:#052f62">Administration</h1>
-    <p>Authorized-user score, schedule and conference management tools will live here.</p>
+
+  <section class="cmsac-admin-card">
+
+    <div id="adminLoginPanel" class="cmsac-admin-login">
+      <div class="cmsac-admin-section-head">
+        <span>ADMIN MODE</span>
+        <h2>Administrator Access</h2>
+        <p>
+          Enter your individual administrator access code to unlock
+          result-correction tools.
+        </p>
+      </div>
+
+      <div class="cmsac-admin-login-row">
+        <div class="gbr-field">
+          <label for="adminAccessCode">ADMINISTRATOR ACCESS CODE</label>
+          <input
+            id="adminAccessCode"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter administrator code"
+          >
+        </div>
+
+        <button id="adminLoginButton" class="cmsac-admin-primary-button" type="button">
+          Enter Admin Mode
+        </button>
+      </div>
+
+      <div id="adminLoginMessage" class="gbr-message" hidden></div>
+    </div>
+
+    <div id="adminWorkspace" hidden>
+
+      <div class="cmsac-admin-mode-banner">
+        <div>
+          <span class="cmsac-admin-mode-label">ADMIN MODE ACTIVE</span>
+          <strong id="adminIdentity">Authorized Administrator</strong>
+        </div>
+
+        <button id="exitAdminButton" class="cmsac-admin-exit-button" type="button">
+          Exit Admin Mode
+        </button>
+      </div>
+
+      <section class="cmsac-admin-tool">
+        <div class="cmsac-admin-section-head">
+          <span>GIRLS BASKETBALL</span>
+          <h2>Official Result Correction</h2>
+          <p>
+            Select a game, review the current official result, and enter
+            an administrative correction when necessary.
+          </p>
+        </div>
+
+        <div class="cmsac-admin-filter-grid">
+          <div class="gbr-field">
+            <label for="adminGameSelect">GAME</label>
+            <select id="adminGameSelect">
+              <option value="">Select a game</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="adminGamePanel" class="cmsac-admin-game-panel" hidden>
+
+          <div class="cmsac-admin-game-meta">
+            <span id="adminGameDate"></span>
+            <span id="adminGameDivision"></span>
+            <span id="adminGameTime"></span>
+            <span id="adminGameStatus"></span>
+          </div>
+
+          <div class="cmsac-admin-current-result">
+            <span class="cmsac-admin-small-label">CURRENT OFFICIAL RESULT</span>
+
+            <div class="cmsac-admin-current-grid">
+              <div>
+                <span>AWAY</span>
+                <strong id="currentAwaySchool"></strong>
+                <b id="currentAwayScore">—</b>
+              </div>
+
+              <div class="cmsac-admin-current-divider">FINAL</div>
+
+              <div>
+                <span>HOME</span>
+                <strong id="currentHomeSchool"></strong>
+                <b id="currentHomeScore">—</b>
+              </div>
+            </div>
+
+            <div class="cmsac-admin-current-detail">
+              <div>
+                <span>VERIFICATION STATUS</span>
+                <strong id="currentVerificationStatus">No official result</strong>
+              </div>
+
+              <div>
+                <span>LAST UPDATED</span>
+                <strong id="currentLastUpdated">—</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="cmsac-admin-correction-panel">
+            <span class="cmsac-admin-small-label">ADMINISTRATIVE CORRECTION</span>
+
+            <div class="cmsac-admin-score-grid">
+              <div class="gbr-field">
+                <label for="adminAwayScore" id="adminAwayScoreLabel">AWAY SCORE</label>
+                <input
+                  id="adminAwayScore"
+                  type="number"
+                  min="0"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="0"
+                >
+              </div>
+
+              <div class="gbr-field">
+                <label for="adminHomeScore" id="adminHomeScoreLabel">HOME SCORE</label>
+                <input
+                  id="adminHomeScore"
+                  type="number"
+                  min="0"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="0"
+                >
+              </div>
+            </div>
+
+            <div class="gbr-field">
+              <label for="correctionReason">REASON FOR CORRECTION</label>
+              <select id="correctionReason">
+                <option value="">Select required reason</option>
+                <option value="Official scorebook correction">Official scorebook correction</option>
+                <option value="Incorrect score originally reported">Incorrect score originally reported</option>
+                <option value="Commissioner-approved correction">Commissioner-approved correction</option>
+                <option value="Data entry error">Data entry error</option>
+              </select>
+            </div>
+
+            <div class="cmsac-admin-warning">
+              <strong>Administrative Override</strong>
+              <span>
+                Saving a correction changes the official result, marks it as
+                AD OVERRIDE, and recalculates conference standings.
+              </span>
+            </div>
+
+            <button id="adminOverrideButton" class="cmsac-admin-danger-button" type="button">
+              Override Official Result
+            </button>
+
+            <div id="adminOverrideMessage" class="gbr-message" hidden></div>
+          </div>
+        </div>
+
+        <div id="adminSuccessPanel" class="cmsac-admin-success" hidden>
+          <div class="cmsac-admin-success-icon">✓</div>
+
+          <div class="cmsac-admin-success-copy">
+            <span>ADMINISTRATIVE UPDATE COMPLETE</span>
+            <h3>Official Result Updated Successfully</h3>
+
+            <div class="cmsac-admin-success-grid">
+              <div>
+                <span>GAME</span>
+                <strong id="successAdminGame"></strong>
+              </div>
+
+              <div>
+                <span>PREVIOUS SCORE</span>
+                <strong id="successPreviousScore"></strong>
+              </div>
+
+              <div>
+                <span>NEW OFFICIAL SCORE</span>
+                <strong id="successNewScore"></strong>
+              </div>
+
+              <div>
+                <span>ADMINISTRATOR</span>
+                <strong id="successAdministrator"></strong>
+              </div>
+
+              <div>
+                <span>REASON</span>
+                <strong id="successReason"></strong>
+              </div>
+
+              <div>
+                <span>STATUS</span>
+                <strong id="successAdminStatus">AD OVERRIDE</strong>
+              </div>
+            </div>
+
+            <button id="editAnotherResultButton" class="cmsac-admin-secondary-button" type="button">
+              Edit Another Result
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
   </section>
+
 </main>
+
+<script>
+  const API_BASE =
+    "https://script.google.com/macros/s/AKfycbxxOoHFjaBhHs46Jq3-9cikIg7SKXUkDHMw0EpRlmg7Dz0sW35w4Fy1luoRZU9FJEFS/exec";
+
+  const SCHEDULE_URL =
+    API_BASE + "?action=girlsBasketballSchedule";
+
+  const adminAccessCode =
+    document.getElementById("adminAccessCode");
+
+  const adminLoginButton =
+    document.getElementById("adminLoginButton");
+
+  const adminLoginMessage =
+    document.getElementById("adminLoginMessage");
+
+  const adminWorkspace =
+    document.getElementById("adminWorkspace");
+
+  const adminIdentity =
+    document.getElementById("adminIdentity");
+
+  const exitAdminButton =
+    document.getElementById("exitAdminButton");
+
+  const adminGameSelect =
+    document.getElementById("adminGameSelect");
+
+  const adminGamePanel =
+    document.getElementById("adminGamePanel");
+
+  const adminGameDate =
+    document.getElementById("adminGameDate");
+
+  const adminGameDivision =
+    document.getElementById("adminGameDivision");
+
+  const adminGameTime =
+    document.getElementById("adminGameTime");
+
+  const adminGameStatus =
+    document.getElementById("adminGameStatus");
+
+  const currentAwaySchool =
+    document.getElementById("currentAwaySchool");
+
+  const currentHomeSchool =
+    document.getElementById("currentHomeSchool");
+
+  const currentAwayScore =
+    document.getElementById("currentAwayScore");
+
+  const currentHomeScore =
+    document.getElementById("currentHomeScore");
+
+  const currentVerificationStatus =
+    document.getElementById("currentVerificationStatus");
+
+  const currentLastUpdated =
+    document.getElementById("currentLastUpdated");
+
+  const adminAwayScore =
+    document.getElementById("adminAwayScore");
+
+  const adminHomeScore =
+    document.getElementById("adminHomeScore");
+
+  const adminAwayScoreLabel =
+    document.getElementById("adminAwayScoreLabel");
+
+  const adminHomeScoreLabel =
+    document.getElementById("adminHomeScoreLabel");
+
+  const correctionReason =
+    document.getElementById("correctionReason");
+
+  const adminOverrideButton =
+    document.getElementById("adminOverrideButton");
+
+  const adminOverrideMessage =
+    document.getElementById("adminOverrideMessage");
+
+  const adminSuccessPanel =
+    document.getElementById("adminSuccessPanel");
+
+  const successAdminGame =
+    document.getElementById("successAdminGame");
+
+  const successPreviousScore =
+    document.getElementById("successPreviousScore");
+
+  const successNewScore =
+    document.getElementById("successNewScore");
+
+  const successAdministrator =
+    document.getElementById("successAdministrator");
+
+  const successReason =
+    document.getElementById("successReason");
+
+  const successAdminStatus =
+    document.getElementById("successAdminStatus");
+
+  const editAnotherResultButton =
+    document.getElementById("editAnotherResultButton");
+
+  let verifiedAdminCode = "";
+  let verifiedAdminName = "";
+  let scheduleGames = [];
+
+
+  function showMessage(element, type, text) {
+    element.hidden = false;
+    element.className =
+      "gbr-message " + type;
+    element.textContent = text;
+  }
+
+
+  function clearMessage(element) {
+    element.hidden = true;
+    element.className = "gbr-message";
+    element.textContent = "";
+  }
+
+
+  function parseDate(value) {
+    const text =
+      String(value || "").trim();
+
+    const match =
+      text.match(
+        /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/
+      );
+
+    if (!match) {
+      const fallback =
+        new Date(text);
+
+      return Number.isNaN(
+        fallback.getTime()
+      )
+        ? null
+        : fallback;
+    }
+
+    let year =
+      Number(match[3]);
+
+    if (year < 100) {
+      year += 2000;
+    }
+
+    return new Date(
+      year,
+      Number(match[1]) - 1,
+      Number(match[2])
+    );
+  }
+
+
+  function formatGameLabel(game) {
+    const date =
+      parseDate(game.gameDate);
+
+    const dateText =
+      date
+        ? date.toLocaleDateString(
+            "en-US",
+            {
+              month: "short",
+              day: "numeric"
+            }
+          )
+        : game.gameDate;
+
+    const resultText =
+      Number.isInteger(
+        Number(game.awayScore)
+      ) &&
+      Number.isInteger(
+        Number(game.homeScore)
+      )
+        ? " • " +
+          game.awayScore +
+          "-" +
+          game.homeScore
+        : "";
+
+    return (
+      dateText +
+      " • " +
+      game.division +
+      " • " +
+      game.awaySchool +
+      " at " +
+      game.homeSchool +
+      " • " +
+      (game.gameTime || "TBA") +
+      resultText
+    );
+  }
+
+
+  async function postAction(action, payload) {
+    const body =
+      new URLSearchParams();
+
+    body.set(
+      "action",
+      action
+    );
+
+    body.set(
+      "payload",
+      JSON.stringify(payload)
+    );
+
+    const response =
+      await fetch(
+        API_BASE,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/x-www-form-urlencoded;charset=UTF-8"
+          },
+          body: body.toString()
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "CMSAC service returned HTTP " +
+        response.status
+      );
+    }
+
+    return response.json();
+  }
+
+
+  async function loadScheduleData() {
+    const response =
+      await fetch(
+        SCHEDULE_URL,
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Could not load the CMSAC schedule."
+      );
+    }
+
+    const payload =
+      await response.json();
+
+    if (
+      !payload ||
+      payload.ok !== true
+    ) {
+      throw new Error(
+        payload && payload.error
+          ? payload.error
+          : "Schedule data was not available."
+      );
+    }
+
+    scheduleGames =
+      Array.isArray(payload.games)
+        ? payload.games
+        : [];
+
+    buildAdminGameChoices();
+  }
+
+
+  function buildAdminGameChoices() {
+    const previousValue =
+      adminGameSelect.value;
+
+    adminGameSelect.innerHTML =
+      '<option value="">Select a game</option>';
+
+    scheduleGames
+      .filter(game => {
+        const status =
+          String(
+            game.gameStatus || ""
+          ).toUpperCase();
+
+        return (
+          status === "SCHEDULED" ||
+          status === "COMPLETED"
+        );
+      })
+      .forEach(game => {
+        const option =
+          document.createElement("option");
+
+        option.value =
+          game.gameId;
+
+        option.textContent =
+          formatGameLabel(game);
+
+        adminGameSelect.appendChild(
+          option
+        );
+      });
+
+    if (
+      previousValue &&
+      scheduleGames.some(
+        game =>
+          game.gameId ===
+          previousValue
+      )
+    ) {
+      adminGameSelect.value =
+        previousValue;
+    }
+  }
+
+
+  function currentAdminGame() {
+    return (
+      scheduleGames.find(
+        game =>
+          game.gameId ===
+          adminGameSelect.value
+      ) || null
+    );
+  }
+
+
+  function scoreOrDash(value) {
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "—";
+    }
+
+    return String(value);
+  }
+
+
+  function showAdminGame() {
+    clearMessage(
+      adminOverrideMessage
+    );
+
+    adminSuccessPanel.hidden = true;
+
+    const game =
+      currentAdminGame();
+
+    if (!game) {
+      adminGamePanel.hidden = true;
+      return;
+    }
+
+    adminGamePanel.hidden = false;
+
+    adminGameDate.textContent =
+      game.gameDate || "";
+
+    adminGameDivision.textContent =
+      game.division || "";
+
+    adminGameTime.textContent =
+      game.gameTime || "TBA";
+
+    adminGameStatus.textContent =
+      game.gameStatus || "";
+
+    currentAwaySchool.textContent =
+      game.awaySchool;
+
+    currentHomeSchool.textContent =
+      game.homeSchool;
+
+    currentAwayScore.textContent =
+      scoreOrDash(
+        game.awayScore
+      );
+
+    currentHomeScore.textContent =
+      scoreOrDash(
+        game.homeScore
+      );
+
+    currentVerificationStatus.textContent =
+      game.resultVerificationStatus ||
+      "No official result";
+
+    currentLastUpdated.textContent =
+      game.resultLastUpdated ||
+      "—";
+
+    adminAwayScoreLabel.textContent =
+      game.awaySchool.toUpperCase() +
+      " SCORE";
+
+    adminHomeScoreLabel.textContent =
+      game.homeSchool.toUpperCase() +
+      " SCORE";
+
+    adminAwayScore.value =
+      game.awayScore === null ||
+      game.awayScore === undefined
+        ? ""
+        : game.awayScore;
+
+    adminHomeScore.value =
+      game.homeScore === null ||
+      game.homeScore === undefined
+        ? ""
+        : game.homeScore;
+
+    correctionReason.value = "";
+
+    adminOverrideButton.disabled = false;
+    adminOverrideButton.textContent =
+      "Override Official Result";
+  }
+
+
+  async function verifyAdminAccess() {
+    clearMessage(
+      adminLoginMessage
+    );
+
+    const accessCode =
+      adminAccessCode.value.trim();
+
+    if (!accessCode) {
+      showMessage(
+        adminLoginMessage,
+        "error",
+        "Enter your administrator access code."
+      );
+      return;
+    }
+
+    adminLoginButton.disabled = true;
+    adminLoginButton.textContent =
+      "Verifying...";
+
+    try {
+      const result =
+        await postAction(
+          "verifyAdminAccess",
+          {
+            accessCode:
+              accessCode
+          }
+        );
+
+      if (
+        !result ||
+        result.ok !== true
+      ) {
+        throw new Error(
+          result && result.error
+            ? result.error
+            : "Administrator access could not be verified."
+        );
+      }
+
+      verifiedAdminCode =
+        accessCode;
+
+      verifiedAdminName =
+        result.accessUserName ||
+        "Authorized Administrator";
+
+      adminIdentity.textContent =
+        verifiedAdminName +
+        (
+          result.positionTitle
+            ? " • " +
+              result.positionTitle
+            : ""
+        );
+
+      await loadScheduleData();
+
+      adminWorkspace.hidden = false;
+
+      showMessage(
+        adminLoginMessage,
+        "success",
+        "Admin Mode enabled for " +
+        verifiedAdminName +
+        "."
+      );
+
+      adminGameSelect.focus();
+
+    } catch (error) {
+      verifiedAdminCode = "";
+      verifiedAdminName = "";
+      adminWorkspace.hidden = true;
+
+      showMessage(
+        adminLoginMessage,
+        "error",
+        error.message ||
+        "Administrator access could not be verified."
+      );
+
+    } finally {
+      adminLoginButton.disabled = false;
+      adminLoginButton.textContent =
+        "Enter Admin Mode";
+    }
+  }
+
+
+  function exitAdminMode() {
+    verifiedAdminCode = "";
+    verifiedAdminName = "";
+
+    adminAccessCode.value = "";
+    adminWorkspace.hidden = true;
+    adminGamePanel.hidden = true;
+    adminSuccessPanel.hidden = true;
+
+    adminGameSelect.value = "";
+    correctionReason.value = "";
+
+    clearMessage(
+      adminLoginMessage
+    );
+
+    clearMessage(
+      adminOverrideMessage
+    );
+
+    adminAccessCode.focus();
+  }
+
+
+  async function overrideOfficialResult() {
+    clearMessage(
+      adminOverrideMessage
+    );
+
+    const game =
+      currentAdminGame();
+
+    if (!game) {
+      showMessage(
+        adminOverrideMessage,
+        "error",
+        "Select the game you want to correct."
+      );
+      return;
+    }
+
+    const awayScore =
+      Number(
+        adminAwayScore.value
+      );
+
+    const homeScore =
+      Number(
+        adminHomeScore.value
+      );
+
+    const reason =
+      correctionReason.value.trim();
+
+    if (
+      !Number.isInteger(awayScore) ||
+      awayScore < 0 ||
+      !Number.isInteger(homeScore) ||
+      homeScore < 0
+    ) {
+      showMessage(
+        adminOverrideMessage,
+        "error",
+        "Both corrected scores must be whole numbers of 0 or greater."
+      );
+      return;
+    }
+
+    if (
+      awayScore === homeScore
+    ) {
+      showMessage(
+        adminOverrideMessage,
+        "error",
+        "A final Girls Basketball score cannot be tied."
+      );
+      return;
+    }
+
+    if (!reason) {
+      showMessage(
+        adminOverrideMessage,
+        "error",
+        "Select the required reason for correction."
+      );
+      return;
+    }
+
+    const previousAway =
+      scoreOrDash(
+        game.awayScore
+      );
+
+    const previousHome =
+      scoreOrDash(
+        game.homeScore
+      );
+
+    const confirmed =
+      window.confirm(
+        "ADMINISTRATIVE OVERRIDE\n\n" +
+        game.awaySchool +
+        " at " +
+        game.homeSchool +
+        " (" +
+        game.division +
+        ")\n\n" +
+        "Current official result:\n" +
+        game.awaySchool +
+        " " +
+        previousAway +
+        "\n" +
+        game.homeSchool +
+        " " +
+        previousHome +
+        "\n\n" +
+        "New official result:\n" +
+        game.awaySchool +
+        " " +
+        awayScore +
+        "\n" +
+        game.homeSchool +
+        " " +
+        homeScore +
+        "\n\n" +
+        "Reason: " +
+        reason +
+        "\n\n" +
+        "This will recalculate conference standings. Continue?"
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    adminOverrideButton.disabled = true;
+    adminOverrideButton.textContent =
+      "Updating Official Result...";
+
+    try {
+      const result =
+        await postAction(
+          "adminOverrideGirlsBasketballScore",
+          {
+            accessCode:
+              verifiedAdminCode,
+
+            gameId:
+              game.gameId,
+
+            awayScore:
+              awayScore,
+
+            homeScore:
+              homeScore,
+
+            correctionReason:
+              reason
+          }
+        );
+
+      if (
+        !result ||
+        result.ok !== true
+      ) {
+        throw new Error(
+          result &&
+          (
+            result.error ||
+            result.message
+          )
+            ? (
+                result.error ||
+                result.message
+              )
+            : "Administrative correction was not accepted."
+        );
+      }
+
+      successAdminGame.textContent =
+        game.awaySchool +
+        " at " +
+        game.homeSchool +
+        " • " +
+        game.division;
+
+      successPreviousScore.textContent =
+        game.awaySchool +
+        " " +
+        previousAway +
+        " – " +
+        previousHome +
+        " " +
+        game.homeSchool;
+
+      successNewScore.textContent =
+        game.awaySchool +
+        " " +
+        awayScore +
+        " – " +
+        homeScore +
+        " " +
+        game.homeSchool;
+
+      successAdministrator.textContent =
+        result.accessUserName ||
+        verifiedAdminName;
+
+      successReason.textContent =
+        reason;
+
+      successAdminStatus.textContent =
+        result.resultVerificationStatus ||
+        "AD OVERRIDE";
+
+      await loadScheduleData();
+
+      adminGamePanel.hidden = true;
+      adminSuccessPanel.hidden = false;
+
+      adminSuccessPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    } catch (error) {
+      showMessage(
+        adminOverrideMessage,
+        "error",
+        error.message ||
+        "The administrative correction could not be completed."
+      );
+
+      adminOverrideButton.disabled = false;
+      adminOverrideButton.textContent =
+        "Override Official Result";
+    }
+  }
+
+
+  function editAnotherResult() {
+    adminSuccessPanel.hidden = true;
+    adminGamePanel.hidden = true;
+    adminGameSelect.value = "";
+    correctionReason.value = "";
+
+    clearMessage(
+      adminOverrideMessage
+    );
+
+    adminGameSelect.focus();
+  }
+
+
+  adminLoginButton.addEventListener(
+    "click",
+    verifyAdminAccess
+  );
+
+  adminAccessCode.addEventListener(
+    "keydown",
+    event => {
+      if (
+        event.key === "Enter"
+      ) {
+        verifyAdminAccess();
+      }
+    }
+  );
+
+  exitAdminButton.addEventListener(
+    "click",
+    exitAdminMode
+  );
+
+  adminGameSelect.addEventListener(
+    "change",
+    showAdminGame
+  );
+
+  adminOverrideButton.addEventListener(
+    "click",
+    overrideOfficialResult
+  );
+
+  editAnotherResultButton.addEventListener(
+    "click",
+    editAnotherResult
+  );
+</script>
+
 </body>
 </html>
-
