@@ -759,6 +759,16 @@ body{
   flex:0 0 auto;
 }
 
+.gbs-filter-group{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.gbs-filter-group label{
+  white-space:nowrap;
+}
+
 .gbs-controls label{
   color:#64788f;
   font-size:9px;
@@ -777,6 +787,10 @@ body{
   font-size:11px;
   font-weight:900;
   cursor:pointer;
+}
+
+#schoolFilter{
+  min-width:175px;
 }
 
 .gbs-print{
@@ -1016,10 +1030,26 @@ body{
 
   .gbs-controls{
     flex-wrap:wrap;
+    align-items:flex-end;
+  }
+
+  .gbs-filter-group{
+    flex:1 1 190px;
+    display:block;
+  }
+
+  .gbs-filter-group label{
+    display:block;
+    margin-bottom:4px;
   }
 
   .gbs-controls select{
-    flex:1 1 160px;
+    width:100%;
+    min-width:0;
+  }
+
+  #schoolFilter{
+    min-width:0;
   }
 
   .gbs-game-row{
