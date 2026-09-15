@@ -1123,3 +1123,172 @@ body{
     display:none !important;
   }
 }
+
+
+/* ============================================================
+   CMSAC GIRLS BASKETBALL - STANDINGS
+   ============================================================ */
+
+.gbst-page{
+  max-width:1280px;
+  margin:0 auto;
+  padding:24px 28px 38px;
+}
+
+.gbst-heading{
+  align-items:center;
+}
+
+.gbst-container{
+  display:grid;
+  gap:18px;
+}
+
+.gbst-division{
+  overflow:hidden;
+  border:1px solid #d3dfeb;
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 4px 12px rgba(26,55,87,.07);
+}
+
+.gbst-division-head{
+  min-height:70px;
+  padding:12px 18px;
+  background:linear-gradient(90deg,#073b73,#0a4e8b);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.gbst-division-head span{
+  display:block;
+  color:#bcd3e8;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  margin-bottom:3px;
+}
+
+.gbst-division-head h2{
+  margin:0;
+  font-size:22px;
+  line-height:1;
+}
+
+.gbst-record-note{
+  color:#d9e7f4;
+  font-size:10px;
+  font-weight:700;
+}
+
+.gbst-table-wrap{
+  overflow-x:auto;
+}
+
+.gbst-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+}
+
+.gbst-table th{
+  padding:10px 9px;
+  background:#eef4fa;
+  color:#5a7188;
+  border-bottom:1px solid #d8e3ed;
+  text-align:center;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.8px;
+}
+
+.gbst-table td{
+  padding:11px 9px;
+  border-bottom:1px solid #e8eef4;
+  color:#435d76;
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+}
+
+.gbst-table tbody tr:last-child td{
+  border-bottom:0;
+}
+
+.gbst-table tbody tr:hover{
+  background:#f8fbfe;
+}
+
+.gbst-table .gbst-school{
+  text-align:left;
+}
+
+.gbst-table td.gbst-school{
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+}
+
+.gbst-seed-cell{
+  width:68px;
+}
+
+.gbst-seed{
+  width:30px;
+  height:30px;
+  margin:0 auto;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#0a4f8f,#062f60);
+  color:#fff;
+  box-shadow:0 4px 9px rgba(5,47,98,.18);
+  font-size:11px;
+  font-weight:900;
+}
+
+.gbst-no-seed{
+  color:#a2aeba;
+  font-size:14px;
+  font-weight:700;
+}
+
+@media(max-width:700px){
+  .gbst-page{
+    padding:18px 14px 30px;
+  }
+
+  .gbst-division-head{
+    align-items:flex-start;
+  }
+
+  .gbst-record-note{
+    text-align:right;
+  }
+}
+
+@media print{
+  .gbst-page{
+    max-width:none;
+    padding:0;
+  }
+
+  .gbst-heading .gbs-print,
+  .gbs-api-status{
+    display:none !important;
+  }
+
+  .gbst-division{
+    break-inside:avoid;
+    box-shadow:none;
+    margin-bottom:14px;
+  }
+
+  .gbst-table{
+    min-width:0;
+  }
+}
