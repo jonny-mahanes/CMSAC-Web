@@ -1503,3 +1503,307 @@ body{
     background:transparent;
   }
 }
+
+
+/* ============================================================
+   CMSAC GIRLS BASKETBALL - REPORT A SCORE
+   ============================================================ */
+
+.gbr-page{
+  max-width:980px;
+  margin:0 auto;
+  padding:26px 28px 40px;
+}
+
+.gbr-heading{
+  margin-bottom:16px;
+}
+
+.gbr-heading h1{
+  margin:4px 0 7px;
+  color:var(--navy);
+  font-size:38px;
+  line-height:1;
+}
+
+.gbr-heading p{
+  margin:0;
+  color:#62788f;
+  font-size:13px;
+}
+
+.gbr-card{
+  overflow:hidden;
+  border:1px solid #d4e0eb;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(26,55,87,.09);
+}
+
+.gbr-step{
+  padding:22px 24px;
+}
+
+.gbr-step + .gbr-step{
+  border-top:1px solid #e2eaf2;
+  background:#fbfdff;
+}
+
+.gbr-step-head{
+  margin-bottom:16px;
+}
+
+.gbr-step-head-inline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.gbr-step-head span{
+  display:block;
+  margin-bottom:4px;
+  color:var(--red);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+.gbr-step-head h2{
+  margin:0;
+  color:var(--navy);
+  font-size:22px;
+}
+
+.gbr-access-row{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+}
+
+.gbr-code-field{
+  flex:1 1 auto;
+}
+
+.gbr-field label{
+  display:block;
+  margin-bottom:5px;
+  color:#60758c;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.2px;
+}
+
+.gbr-field input,
+.gbr-field select{
+  width:100%;
+  height:43px;
+  padding:0 12px;
+  border:1px solid #bccbd9;
+  border-radius:7px;
+  background:#fff;
+  color:var(--navy);
+  font-size:13px;
+  font-weight:700;
+}
+
+.gbr-field input:focus,
+.gbr-field select:focus{
+  outline:2px solid rgba(11,71,127,.18);
+  border-color:#6c94b8;
+}
+
+.gbr-primary-button,
+.gbr-submit-button{
+  height:43px;
+  padding:0 18px;
+  border:0;
+  border-radius:7px;
+  background:var(--navy);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.gbr-primary-button:hover,
+.gbr-submit-button:hover{
+  background:var(--navy2);
+}
+
+.gbr-primary-button:disabled,
+.gbr-submit-button:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+
+.gbr-user-chip{
+  padding:7px 11px;
+  border-radius:16px;
+  background:#eaf2f9;
+  color:#315775;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.gbr-game-details{
+  margin-top:16px;
+}
+
+.gbr-game-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.gbr-game-meta span{
+  padding:5px 9px;
+  border-radius:14px;
+  background:#eaf1f8;
+  color:#45647f;
+  font-size:9px;
+  font-weight:900;
+}
+
+.gbr-score-grid{
+  display:grid;
+  grid-template-columns:1fr 72px 1fr;
+  align-items:center;
+  gap:14px;
+  margin:0 0 16px;
+}
+
+.gbr-team-score{
+  padding:18px;
+  border:1px solid #d7e1eb;
+  border-radius:10px;
+  background:#fff;
+  text-align:center;
+}
+
+.gbr-side-label{
+  display:block;
+  color:#8090a0;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.3px;
+}
+
+.gbr-team-score strong{
+  display:block;
+  min-height:42px;
+  margin:5px 0 10px;
+  color:var(--navy);
+  font-size:18px;
+  line-height:1.15;
+}
+
+.gbr-team-score input{
+  width:110px;
+  height:58px;
+  border:2px solid #bed0df;
+  border-radius:9px;
+  text-align:center;
+  color:var(--navy);
+  font-size:27px;
+  font-weight:900;
+}
+
+.gbr-score-divider{
+  color:#7c8fa2;
+  text-align:center;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.2px;
+}
+
+.gbr-submit-button{
+  display:block;
+  min-width:190px;
+  margin-left:auto;
+  background:var(--red);
+}
+
+.gbr-submit-button:hover{
+  background:#b91227;
+}
+
+.gbr-message{
+  margin-top:13px;
+  padding:10px 12px;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.4;
+}
+
+.gbr-message.success{
+  border:1px solid #cce5d3;
+  background:#edf8f0;
+  color:#347048;
+}
+
+.gbr-message.error{
+  border:1px solid #efc7cd;
+  background:#fff0f2;
+  color:#9d2c3b;
+}
+
+.gbr-help{
+  margin-top:14px;
+  padding:11px 14px;
+  border-radius:8px;
+  background:#eef3f8;
+  color:#5d7186;
+  text-align:center;
+  font-size:10px;
+  line-height:1.45;
+}
+
+.gbr-help strong{
+  color:var(--navy);
+}
+
+.gbr-help a{
+  color:var(--navy);
+  font-weight:900;
+}
+
+@media(max-width:700px){
+  .gbr-page{
+    padding:18px 14px 30px;
+  }
+
+  .gbr-step-head-inline{
+    display:block;
+  }
+
+  .gbr-user-chip{
+    display:inline-block;
+    margin-top:10px;
+  }
+
+  .gbr-access-row{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .gbr-primary-button{
+    width:100%;
+  }
+
+  .gbr-score-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gbr-score-divider{
+    padding:2px 0;
+  }
+
+  .gbr-submit-button{
+    width:100%;
+    margin:0;
+  }
+}
