@@ -445,3 +445,233 @@ body{
     align-items:flex-start;
   }
 }
+
+
+/* ============================================================
+   CMSAC GIRLS BASKETBALL PORTAL
+   ============================================================ */
+
+.gb-nav a:first-child{
+  background:rgba(255,255,255,.10);
+}
+
+.gb-page{
+  max-width:1320px;
+  margin:0 auto;
+  padding:24px 28px 34px;
+}
+
+.gb-hero{
+  min-height:245px;
+  display:grid;
+  grid-template-columns:42% 58%;
+  overflow:hidden;
+  border-radius:14px;
+  background:linear-gradient(120deg,#052f62,#0b477f);
+  box-shadow:0 10px 28px rgba(13,47,82,.16);
+  border:1px solid rgba(5,47,98,.12);
+}
+
+.gb-hero-image{
+  min-height:245px;
+  background:
+    linear-gradient(90deg,rgba(5,47,98,.05),rgba(5,47,98,.28)),
+    url('assets/girls-basketball.jpg');
+  background-size:cover;
+  background-position:center;
+}
+
+.gb-hero-copy{
+  padding:38px 44px;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.gb-kicker{
+  color:#ffb7bd;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.gb-hero-copy h1{
+  margin:7px 0 8px;
+  font-size:46px;
+  line-height:1;
+  letter-spacing:1px;
+}
+
+.gb-hero-copy p{
+  margin:0;
+  max-width:620px;
+  font-size:15px;
+  line-height:1.5;
+  color:#dfeaf5;
+}
+
+.gb-divisions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+
+.gb-divisions span{
+  padding:7px 11px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:18px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+  background:rgba(255,255,255,.08);
+}
+
+.gb-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:20px;
+}
+
+.gb-card{
+  min-height:145px;
+  position:relative;
+  display:grid;
+  grid-template-columns:54px 1fr 34px;
+  gap:15px;
+  align-items:center;
+  padding:20px 20px;
+  border-radius:11px;
+  border:1px solid #d6e1ec;
+  background:#fff;
+  text-decoration:none;
+  color:var(--ink);
+  box-shadow:0 5px 14px rgba(26,55,87,.08);
+  transition:.18s ease;
+}
+
+.gb-card:hover{
+  transform:translateY(-2px);
+  border-color:#9bb5cf;
+  box-shadow:0 9px 20px rgba(26,55,87,.14);
+}
+
+.gb-card-primary{
+  border-left:5px solid var(--red);
+}
+
+.gb-card-number{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#edf3f9;
+  color:var(--navy);
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:1px;
+}
+
+.gb-card-primary .gb-card-number{
+  background:#fff0f2;
+  color:var(--red);
+}
+
+.gb-card-copy{
+  min-width:0;
+}
+
+.gb-card-eyebrow{
+  display:block;
+  margin-bottom:5px;
+  color:#6e8196;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+.gb-card h2{
+  margin:0 0 6px;
+  color:var(--navy);
+  font-size:22px;
+  line-height:1.05;
+}
+
+.gb-card p{
+  margin:0;
+  color:#60748b;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.gb-card-arrow{
+  color:var(--navy);
+  font-size:28px;
+  text-align:right;
+}
+
+.gb-admin-note{
+  margin-top:16px;
+  padding:11px 15px;
+  border-radius:8px;
+  background:#edf3f8;
+  color:#536a82;
+  font-size:11px;
+  line-height:1.45;
+  text-align:center;
+}
+
+.gb-admin-note strong{
+  color:var(--navy);
+}
+
+.gb-admin-note a{
+  color:var(--navy);
+  font-weight:800;
+}
+
+@media(max-width:850px){
+  .gb-hero{
+    grid-template-columns:1fr;
+  }
+
+  .gb-hero-image{
+    min-height:175px;
+  }
+
+  .gb-hero-copy{
+    padding:28px;
+  }
+
+  .gb-actions{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:560px){
+  .gb-page{
+    padding:16px 14px 28px;
+  }
+
+  .gb-hero-copy h1{
+    font-size:36px;
+  }
+
+  .gb-card{
+    grid-template-columns:44px 1fr 24px;
+    padding:17px 14px;
+  }
+
+  .gb-card-number{
+    width:40px;
+    height:40px;
+  }
+
+  .gb-card h2{
+    font-size:19px;
+  }
+}
