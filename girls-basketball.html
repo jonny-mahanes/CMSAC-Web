@@ -1,19 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Girls Basketball | CMSAC</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girls Basketball | CMSAC</title>
+  <meta name="description" content="CMSAC Girls Basketball">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <header class="topbar">
-  <a class="brand" href="index.html"><img src="assets/cmsac-logo-banner.jpg" alt="CMSAC"></a>
-  <nav class="topnav"><a href="index.html">← Back</a><a href="index.html">Home</a></nav>
+  <a class="brand" href="index.html" aria-label="CMSAC Home">
+    <img src="assets/cmsac-logo-banner.jpg" alt="CMSAC - Commonwealth Middle School Athletic Conference">
+  </a>
+
+  <nav class="topnav gb-nav" aria-label="Girls Basketball navigation">
+    <a href="index.html#sports">← All Sports</a>
+    <a href="index.html">Home</a>
+  </nav>
 </header>
-<main style="max-width:1000px;margin:55px auto;padding:24px;text-align:center">
-  <h1 style="color:#052f62">Girls Basketball Portal</h1>
-  <p>The full Girls Basketball sport page is the next build step.</p>
+
+<main class="gb-page">
+
+  <section class="gb-hero">
+    <div class="gb-hero-image" aria-hidden="true"></div>
+
+    <div class="gb-hero-copy">
+      <span class="gb-kicker">CMSAC ATHLETICS</span>
+      <h1>GIRLS BASKETBALL</h1>
+      <p>Schedules, results, standings and conference tournament information.</p>
+
+      <div class="gb-divisions" aria-label="Girls Basketball divisions">
+        <span>6TH GRADE</span>
+        <span>7TH GRADE</span>
+        <span>8TH GRADE</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="gb-actions" aria-label="Girls Basketball tools">
+
+    <a class="gb-card gb-card-primary" href="girls-basketball-schedule.html">
+      <div class="gb-card-number">01</div>
+      <div class="gb-card-copy">
+        <span class="gb-card-eyebrow">PUBLIC</span>
+        <h2>Schedule &amp; Results</h2>
+        <p>View conference games, dates, times, locations and completed scores.</p>
+      </div>
+      <div class="gb-card-arrow">→</div>
+    </a>
+
+    <a class="gb-card" href="girls-basketball-standings.html">
+      <div class="gb-card-number">02</div>
+      <div class="gb-card-copy">
+        <span class="gb-card-eyebrow">PUBLIC</span>
+        <h2>Standings</h2>
+        <p>View current 6th, 7th and 8th grade conference standings and seeding.</p>
+      </div>
+      <div class="gb-card-arrow">→</div>
+    </a>
+
+    <a class="gb-card" href="girls-basketball-report-score.html">
+      <div class="gb-card-number">03</div>
+      <div class="gb-card-copy">
+        <span class="gb-card-eyebrow">AUTHORIZED USERS</span>
+        <h2>Report a Score</h2>
+        <p>Coaches and authorized school users can submit final conference scores.</p>
+      </div>
+      <div class="gb-card-arrow">→</div>
+    </a>
+
+    <a class="gb-card" href="girls-basketball-tournament.html">
+      <div class="gb-card-number">04</div>
+      <div class="gb-card-copy">
+        <span class="gb-card-eyebrow">POSTSEASON</span>
+        <h2>Tournament Information</h2>
+        <p>View tournament schedule, seeding and postseason information when available.</p>
+      </div>
+      <div class="gb-card-arrow">→</div>
+    </a>
+
+  </section>
+
+  <section class="gb-admin-note">
+    <div>
+      <strong>Conference administrators:</strong>
+      score corrections and schedule-management tools are located in the central
+      <a href="cmsac-info-admin.html#administration">CMSAC Administration</a> area.
+    </div>
+  </section>
+
 </main>
+
 </body>
 </html>
