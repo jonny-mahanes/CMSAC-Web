@@ -2219,3 +2219,473 @@ th{
 [hidden]{
   display:none !important;
 }
+
+/* ============================================================
+   CMSAC ADMINISTRATION - ADMIN MODE / RESULT CORRECTIONS
+   ============================================================ */
+
+.cmsac-admin-page{
+  width:min(1100px,calc(100% - 28px));
+  margin:0 auto;
+  padding:34px 0 56px;
+}
+
+.cmsac-admin-heading{
+  margin-bottom:18px;
+}
+
+.cmsac-admin-heading h1{
+  margin:5px 0 7px;
+  color:var(--navy);
+  font-size:38px;
+  line-height:1.05;
+}
+
+.cmsac-admin-heading p{
+  margin:0;
+  max-width:760px;
+  color:#596272;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.cmsac-admin-card{
+  border:1px solid #d9dee7;
+  border-radius:13px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(22,39,67,.08);
+  overflow:hidden;
+}
+
+.cmsac-admin-login{
+  padding:22px;
+}
+
+.cmsac-admin-section-head > span{
+  display:block;
+  margin-bottom:4px;
+  color:#7c8797;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.35px;
+}
+
+.cmsac-admin-section-head h2{
+  margin:0 0 5px;
+  color:var(--navy);
+  font-size:23px;
+  line-height:1.15;
+}
+
+.cmsac-admin-section-head p{
+  margin:0;
+  color:#697282;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.cmsac-admin-login-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:10px;
+  margin-top:17px;
+}
+
+.cmsac-admin-primary-button,
+.cmsac-admin-danger-button,
+.cmsac-admin-secondary-button,
+.cmsac-admin-exit-button{
+  min-height:42px;
+  border-radius:7px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.cmsac-admin-primary-button{
+  padding:0 17px;
+  border:0;
+  background:var(--navy);
+  color:#fff;
+}
+
+.cmsac-admin-primary-button:hover{
+  background:var(--navy2);
+}
+
+.cmsac-admin-mode-banner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:14px 20px;
+  background:#102a4c;
+  color:#fff;
+}
+
+.cmsac-admin-mode-banner > div{
+  min-width:0;
+}
+
+.cmsac-admin-mode-label{
+  display:block;
+  margin-bottom:2px;
+  color:#b8c8dd;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.25px;
+}
+
+.cmsac-admin-mode-banner strong{
+  display:block;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.cmsac-admin-exit-button{
+  min-height:34px;
+  padding:0 12px;
+  border:1px solid rgba(255,255,255,.42);
+  background:transparent;
+  color:#fff;
+  font-size:10px;
+  flex:0 0 auto;
+}
+
+.cmsac-admin-tool{
+  padding:22px;
+}
+
+.cmsac-admin-filter-grid{
+  margin-top:17px;
+}
+
+.cmsac-admin-game-panel{
+  margin-top:18px;
+  border-top:1px solid #e4e7ed;
+  padding-top:18px;
+}
+
+.cmsac-admin-game-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.cmsac-admin-game-meta span{
+  padding:5px 9px;
+  border-radius:999px;
+  background:#eef2f7;
+  color:#435066;
+  font-size:9px;
+  font-weight:900;
+}
+
+.cmsac-admin-current-result{
+  padding:16px;
+  border:1px solid #dfe4eb;
+  border-radius:10px;
+  background:#f8fafc;
+}
+
+.cmsac-admin-small-label{
+  display:block;
+  margin-bottom:10px;
+  color:#7b8594;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.1px;
+}
+
+.cmsac-admin-current-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+}
+
+.cmsac-admin-current-grid > div:not(.cmsac-admin-current-divider){
+  display:grid;
+  gap:2px;
+}
+
+.cmsac-admin-current-grid > div:last-child{
+  text-align:right;
+}
+
+.cmsac-admin-current-grid span{
+  color:#8893a3;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.8px;
+}
+
+.cmsac-admin-current-grid strong{
+  color:var(--navy);
+  font-size:14px;
+}
+
+.cmsac-admin-current-grid b{
+  color:#17233a;
+  font-size:30px;
+  line-height:1;
+}
+
+.cmsac-admin-current-divider{
+  color:#9aa3b1;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.cmsac-admin-current-detail{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px;
+}
+
+.cmsac-admin-current-detail > div{
+  padding:9px 10px;
+  border-radius:7px;
+  background:#fff;
+  border:1px solid #e5e8ed;
+}
+
+.cmsac-admin-current-detail span{
+  display:block;
+  margin-bottom:2px;
+  color:#8993a2;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.8px;
+}
+
+.cmsac-admin-current-detail strong{
+  color:#3c4657;
+  font-size:10px;
+}
+
+.cmsac-admin-correction-panel{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid #ead3d3;
+  border-radius:10px;
+  background:#fffafa;
+}
+
+.cmsac-admin-score-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.cmsac-admin-warning{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  margin:13px 0;
+  padding:10px 12px;
+  border-left:4px solid #b4232f;
+  background:#fff1f2;
+  color:#6c2730;
+  font-size:10px;
+  line-height:1.45;
+}
+
+.cmsac-admin-warning strong{
+  flex:0 0 auto;
+}
+
+.cmsac-admin-danger-button{
+  width:100%;
+  border:0;
+  background:#b4232f;
+  color:#fff;
+  font-size:12px;
+}
+
+.cmsac-admin-danger-button:hover{
+  background:#921b26;
+}
+
+.cmsac-admin-danger-button:disabled,
+.cmsac-admin-primary-button:disabled{
+  opacity:.62;
+  cursor:not-allowed;
+}
+
+.cmsac-admin-success{
+  margin:20px;
+  padding:20px;
+  border:1px solid #b8ddc3;
+  border-radius:11px;
+  background:linear-gradient(180deg,#f5fbf7,#edf8f0);
+  display:flex;
+  gap:15px;
+}
+
+.cmsac-admin-success-icon{
+  width:52px;
+  height:52px;
+  flex:0 0 52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#2f7d46;
+  color:#fff;
+  font-size:27px;
+  font-weight:900;
+}
+
+.cmsac-admin-success-copy{
+  min-width:0;
+  flex:1;
+}
+
+.cmsac-admin-success-copy > span{
+  display:block;
+  margin-bottom:3px;
+  color:#4d7d5a;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.15px;
+}
+
+.cmsac-admin-success-copy h3{
+  margin:0 0 13px;
+  color:#214d31;
+  font-size:23px;
+  line-height:1.15;
+}
+
+.cmsac-admin-success-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.cmsac-admin-success-grid > div{
+  padding:9px 10px;
+  border:1px solid #d8eadc;
+  border-radius:7px;
+  background:#fff;
+  min-width:0;
+}
+
+.cmsac-admin-success-grid span{
+  display:block;
+  margin-bottom:2px;
+  color:#71897a;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.8px;
+}
+
+.cmsac-admin-success-grid strong{
+  display:block;
+  color:#234f31;
+  font-size:10px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+
+.cmsac-admin-secondary-button{
+  margin-top:13px;
+  padding:0 15px;
+  border:1px solid #9fb9aa;
+  background:#fff;
+  color:#2f6842;
+  font-size:10px;
+}
+
+.cmsac-admin-secondary-button:hover{
+  background:#f5faf6;
+}
+
+@media(max-width:700px){
+  .cmsac-admin-page{
+    width:calc(100% - 20px);
+    padding-top:24px;
+  }
+
+  .cmsac-admin-heading h1{
+    font-size:31px;
+  }
+
+  .cmsac-admin-login,
+  .cmsac-admin-tool{
+    padding:16px;
+  }
+
+  .cmsac-admin-login-row{
+    grid-template-columns:1fr;
+  }
+
+  .cmsac-admin-primary-button{
+    width:100%;
+  }
+
+  .cmsac-admin-mode-banner{
+    align-items:flex-start;
+  }
+
+  .cmsac-admin-current-grid{
+    grid-template-columns:1fr auto 1fr;
+    gap:8px;
+  }
+
+  .cmsac-admin-current-grid strong{
+    font-size:11px;
+  }
+
+  .cmsac-admin-current-grid b{
+    font-size:25px;
+  }
+
+  .cmsac-admin-current-detail,
+  .cmsac-admin-score-grid,
+  .cmsac-admin-success-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cmsac-admin-warning{
+    display:block;
+  }
+
+  .cmsac-admin-warning strong{
+    display:block;
+    margin-bottom:3px;
+  }
+
+  .cmsac-admin-success{
+    display:block;
+    margin:14px;
+    padding:16px;
+  }
+
+  .cmsac-admin-success-icon{
+    margin-bottom:11px;
+  }
+
+  .cmsac-admin-secondary-button{
+    width:100%;
+  }
+}
+
+@media(max-width:430px){
+  .cmsac-admin-current-grid{
+    grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);
+  }
+
+  .cmsac-admin-current-grid b{
+    font-size:22px;
+  }
+
+  .cmsac-admin-current-divider{
+    text-align:center;
+  }
+}
