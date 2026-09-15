@@ -1,1 +1,430 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}:root{--navy:#052f62;--navy2:#0b477f;--red:#d7192d;--white:#fff;--ink:#102c4e;--line:#d8e2ec}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(#f8fbff,#edf3f9)}.topbar{min-height:88px;background:linear-gradient(90deg,#052f62,#0b477f);color:#fff;padding:8px 4vw;display:flex;justify-content:space-between;align-items:center;gap:26px;border-bottom:3px solid var(--red)}.brand{display:block;max-width:620px}.brand img{display:block;max-height:70px;max-width:100%;object-fit:contain}.topnav{display:flex;gap:8px;flex-wrap:wrap}.topnav a{color:#fff;text-decoration:none;font-weight:800;padding:11px 15px;border-radius:7px}.topnav a.active,.topnav a:hover{background:var(--red)}.announcements{display:grid;grid-template-columns:250px 1fr;align-items:center;gap:14px;background:#fff;border-bottom:1px solid var(--line);padding:10px 4vw;box-shadow:0 3px 9px rgba(25,55,88,.08)}.ann-label{display:flex;align-items:center;gap:12px}.ann-label strong{display:block;font-size:17px;letter-spacing:1px}.ann-label small{display:block;font-size:9px;letter-spacing:1.4px;color:#466b92;margin-top:3px}.megaphone{font-size:25px}.ann-scroll{display:flex;overflow-x:auto;gap:12px}.ann-scroll article{min-width:300px;border-left:1px solid #cad8e6;padding-left:14px}.ann-scroll b,.ann-scroll strong,.ann-scroll span{display:block}.ann-scroll b{font-size:9px;color:#627895;letter-spacing:1px}.ann-scroll strong{font-size:14px;margin:3px 0}.ann-scroll span{font-size:12px;color:#60728b}.layout{max-width:1680px;margin:0 auto;padding:10px 18px 16px;display:grid;grid-template-columns:185px minmax(0,1fr);gap:16px}.schools{background:rgba(255,255,255,.92);border:1px solid #dbe5ef;border-radius:10px;padding:9px;box-shadow:0 5px 14px rgba(30,62,96,.08);align-self:start}.schools h2{text-align:center;margin:0 0 8px;font-size:15px;font-style:italic;letter-spacing:1.3px}.school-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.school-grid div{min-height:72px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:4px}.school-grid img{max-width:100%;max-height:66px;object-fit:contain}.sports-title{text-align:center;padding:0 0 8px}.sports-title span{color:var(--red);font-weight:900;letter-spacing:4px}.sports-title h1{margin:4px 0 0;font-size:42px;line-height:1;color:var(--navy);font-style:italic;letter-spacing:2px}.sports-title p{margin:6px 0 0;font-size:10px;letter-spacing:4px;font-weight:800}.sports-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.sport{position:relative;min-height:210px;border:1px solid #cbd8e5;border-radius:10px;overflow:hidden;box-shadow:0 5px 14px rgba(15,48,82,.16);text-decoration:none;background-size:cover;background-position:center;transition:.2s ease}.sport::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,27,54,.03),rgba(4,27,54,.24) 58%,rgba(4,27,54,.78));}.sport.live:hover,.sport.info-admin:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(15,48,82,.25)}.sport-footer{position:absolute;left:0;right:0;bottom:0;min-height:64px;padding:10px 13px;background:linear-gradient(90deg,rgba(5,47,98,.97),rgba(5,40,83,.97));color:#fff;display:flex;align-items:center;justify-content:space-between}.sport-footer strong{font-size:15px;line-height:1.05}.sport-footer span{font-size:28px}.status{position:absolute;z-index:3;top:10px;right:10px;background:rgba(4,46,96,.92);color:#fff;border:1px solid rgba(255,255,255,.85);border-radius:20px;padding:6px 9px;font-size:9px;font-weight:900;letter-spacing:1px}.live-status{background:var(--red)}.tools-status{background:#0c5c9a}.coming{opacity:.78;filter:saturate(.75)}.girls-basketball{background-image:url('assets/girls-basketball.jpg')}.boys-basketball{background-image:url('assets/boys-basketball.jpg')}.football{background-image:url('assets/football.jpg')}.girls-soccer{background-image:url('assets/girls-soccer.jpg')}.boys-soccer{background-image:url('assets/boys-soccer.jpg')}.girls-volleyball{background-image:url('assets/girls-volleyball.jpg')}.boys-volleyball{background-image:url('assets/boys-volleyball.jpg')}.girls-flag-football{background-image:url('assets/girls-flag-football.jpg')}.girls-softball{background-image:url('assets/girls-softball.jpg')}.boys-baseball{background-image:url('assets/boys-baseball.jpg')}.info-admin{background-image:url('assets/info-admin.jpg')}.info-admin{grid-column:span 2}.info-admin .sport-footer{background:linear-gradient(90deg,rgba(6,42,86,.97),rgba(11,79,126,.97))}footer{background:var(--navy);color:#fff;border-top:3px solid var(--red);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:12px 3vw}footer strong{display:block;font-size:13px;letter-spacing:1.4px}footer small{font-size:8px;letter-spacing:1.5px}.kentucky{font-style:italic;font-size:18px}@media(max-width:1200px){.sports-grid{grid-template-columns:repeat(3,1fr)}.info-admin{grid-column:span 1}.announcements{grid-template-columns:1fr}.brand{max-width:500px}}@media(max-width:900px){.topbar{flex-direction:column;align-items:flex-start}.layout{grid-template-columns:1fr}.schools{order:2}.maincol{order:1}.school-grid{grid-template-columns:repeat(5,1fr)}}@media(max-width:680px){.sports-grid{grid-template-columns:repeat(2,1fr)}.sports-title h1{font-size:34px}.school-grid{grid-template-columns:repeat(3,1fr)}footer{grid-template-columns:1fr;text-align:center}.brand img{max-height:58px}}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+:root{
+  --navy:#052f62;
+  --navy2:#0b477f;
+  --red:#d7192d;
+  --white:#ffffff;
+  --ink:#102c4e;
+  --line:#d8e2ec;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(#f8fbff,#edf3f9);
+}
+
+.topbar{
+  min-height:92px;
+  background:linear-gradient(90deg,#052f62,#0b477f);
+  color:#fff;
+  padding:7px 3.5vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:28px;
+  border-bottom:3px solid var(--red);
+}
+
+.brand{
+  display:block;
+  max-width:760px;
+  min-width:390px;
+}
+
+.brand img{
+  display:block;
+  width:100%;
+  max-height:76px;
+  object-fit:contain;
+  object-position:left center;
+}
+
+.topnav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.topnav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  padding:11px 15px;
+  border-radius:7px;
+}
+
+.topnav a.active,
+.topnav a:hover{
+  background:var(--red);
+}
+
+.announcements{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  align-items:center;
+  gap:14px;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  padding:9px 3.5vw;
+  box-shadow:0 3px 9px rgba(25,55,88,.08);
+}
+
+.ann-label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.ann-label strong{
+  display:block;
+  font-size:17px;
+  letter-spacing:1px;
+}
+
+.ann-label small{
+  display:block;
+  font-size:9px;
+  letter-spacing:1.4px;
+  color:#466b92;
+  margin-top:3px;
+}
+
+.megaphone{
+  font-size:25px;
+}
+
+.ann-scroll{
+  display:flex;
+  overflow-x:auto;
+  gap:12px;
+}
+
+.ann-scroll article{
+  min-width:300px;
+  border-left:1px solid #cad8e6;
+  padding-left:14px;
+}
+
+.ann-scroll b,
+.ann-scroll strong,
+.ann-scroll span{
+  display:block;
+}
+
+.ann-scroll b{
+  font-size:9px;
+  color:#627895;
+  letter-spacing:1px;
+}
+
+.ann-scroll strong{
+  font-size:14px;
+  margin:3px 0;
+}
+
+.ann-scroll span{
+  font-size:12px;
+  color:#60728b;
+}
+
+.homepage{
+  max-width:1560px;
+  margin:0 auto;
+  padding:12px 26px 20px;
+}
+
+.sports-title{
+  text-align:center;
+  padding:2px 0 12px;
+}
+
+.sports-title span{
+  color:var(--red);
+  font-weight:900;
+  letter-spacing:4px;
+}
+
+.sports-title h1{
+  margin:4px 0 0;
+  font-size:42px;
+  line-height:1;
+  color:var(--navy);
+  font-style:italic;
+  letter-spacing:2px;
+}
+
+.sports-title p{
+  margin:6px 0 0;
+  font-size:10px;
+  letter-spacing:4px;
+  font-weight:800;
+}
+
+.sports-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:20px 18px;
+  max-width:1450px;
+  margin:0 auto;
+}
+
+.sport{
+  position:relative;
+  height:174px;
+  border:1px solid #cbd8e5;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 5px 14px rgba(15,48,82,.13);
+  text-decoration:none;
+  background:#fff;
+  transition:.2s ease;
+}
+
+.sport.live{
+  border:2px solid var(--red);
+  box-shadow:0 6px 18px rgba(215,25,45,.18);
+}
+
+.sport.live:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 22px rgba(15,48,82,.22);
+}
+
+.sport-image{
+  height:104px;
+  background-size:cover;
+  background-position:center;
+}
+
+.sport-footer{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:70px;
+  padding:0 14px;
+  background:linear-gradient(90deg,#073b73,#082f5d);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.sport-footer strong{
+  font-size:17px;
+  line-height:1.05;
+  letter-spacing:.1px;
+}
+
+.sport-footer span{
+  font-size:26px;
+}
+
+.status{
+  position:absolute;
+  z-index:4;
+  top:8px;
+  right:8px;
+  background:rgba(4,46,96,.93);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:20px;
+  padding:5px 8px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.live-status{
+  background:var(--red);
+}
+
+.coming{
+  opacity:.84;
+}
+
+.girls-basketball .sport-image{
+  background-image:url('assets/girls-basketball.jpg');
+}
+
+.boys-basketball .sport-image{
+  background-image:url('assets/boys-basketball.jpg');
+}
+
+.football .sport-image{
+  background-image:url('assets/football.jpg');
+}
+
+.girls-soccer .sport-image{
+  background-image:url('assets/girls-soccer.jpg');
+}
+
+.boys-soccer .sport-image{
+  background-image:url('assets/boys-soccer.jpg');
+}
+
+.girls-volleyball .sport-image{
+  background-image:url('assets/girls-volleyball.jpg');
+}
+
+.boys-volleyball .sport-image{
+  background-image:url('assets/boys-volleyball.jpg');
+}
+
+.girls-flag-football .sport-image{
+  background-image:url('assets/girls-flag-football.jpg');
+}
+
+.girls-softball .sport-image{
+  background-image:url('assets/girls-softball.jpg');
+}
+
+.boys-baseball .sport-image{
+  background-image:url('assets/boys-baseball.jpg');
+}
+
+.info-admin-bar{
+  max-width:1450px;
+  margin:18px auto 12px;
+  min-height:54px;
+  padding:10px 18px;
+  border-radius:9px;
+  text-decoration:none;
+  background:linear-gradient(90deg,#062e5c,#0b4c82);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  box-shadow:0 4px 12px rgba(15,48,82,.13);
+}
+
+.info-admin-bar strong{
+  display:block;
+  font-size:15px;
+  letter-spacing:.4px;
+}
+
+.info-admin-bar div span{
+  display:block;
+  margin-top:3px;
+  font-size:10px;
+  opacity:.8;
+}
+
+.info-arrow{
+  font-size:24px;
+}
+
+.info-admin-bar:hover{
+  background:linear-gradient(90deg,#0a396f,#0c5b99);
+}
+
+.member-banner{
+  max-width:1450px;
+  margin:0 auto;
+  background:#fff;
+  border:1px solid #d9e3ed;
+  border-radius:10px;
+  padding:8px 12px 10px;
+  box-shadow:0 5px 14px rgba(30,62,96,.07);
+}
+
+.member-banner-title{
+  text-align:center;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:7px;
+}
+
+.member-logo-row{
+  display:grid;
+  grid-template-columns:repeat(9,1fr);
+  gap:12px;
+  align-items:center;
+}
+
+.member-logo-row div{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-radius:7px;
+}
+
+.member-logo-row img{
+  max-width:100%;
+  max-height:64px;
+  object-fit:contain;
+}
+
+@media(max-width:1200px){
+  .sports-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .member-logo-row{
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .announcements{
+    grid-template-columns:1fr;
+  }
+
+  .brand{
+    max-width:620px;
+    min-width:320px;
+  }
+}
+
+@media(max-width:850px){
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .sports-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .member-logo-row{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:560px){
+  .homepage{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .sports-grid{
+    grid-template-columns:1fr;
+  }
+
+  .sports-title h1{
+    font-size:34px;
+  }
+
+  .brand{
+    min-width:0;
+    width:100%;
+  }
+
+  .member-logo-row{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
