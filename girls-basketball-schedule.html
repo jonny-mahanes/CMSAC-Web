@@ -33,13 +33,30 @@
     </div>
 
     <div class="gbs-controls">
-      <label for="teamFilter">VIEW</label>
-      <select id="teamFilter" aria-label="Choose team schedule">
-        <option value="ALL" selected>ALL TEAMS</option>
-        <option value="6TH">6TH GRADE</option>
-        <option value="7TH">7TH GRADE</option>
-        <option value="8TH">8TH GRADE</option>
-      </select>
+      <div class="gbs-filter-group">
+        <label for="schoolFilter">SCHOOL</label>
+        <select id="schoolFilter" aria-label="Choose school schedule">
+          <option value="ALL" selected>ALL SCHOOLS</option>
+          <option value="Estill County">ESTILL COUNTY</option>
+          <option value="Garrard County">GARRARD COUNTY</option>
+          <option value="Farristown">FARRISTOWN</option>
+          <option value="Foley">FOLEY</option>
+          <option value="Madison">MADISON</option>
+          <option value="Caudill">CAUDILL</option>
+          <option value="Clark-Moores">CLARK-MOORES</option>
+          <option value="Model">MODEL</option>
+        </select>
+      </div>
+
+      <div class="gbs-filter-group">
+        <label for="teamFilter">TEAM</label>
+        <select id="teamFilter" aria-label="Choose team schedule">
+          <option value="ALL" selected>ALL TEAMS</option>
+          <option value="6TH">6TH GRADE</option>
+          <option value="7TH">7TH GRADE</option>
+          <option value="8TH">8TH GRADE</option>
+        </select>
+      </div>
 
       <button class="gbs-print" type="button" onclick="window.print()">
         Print Schedule
@@ -112,6 +129,7 @@
     }
   ];
 
+  const schoolFilter = document.getElementById("schoolFilter");
   const teamFilter = document.getElementById("teamFilter");
   const scheduleList = document.getElementById("scheduleList");
   const emptyState = document.getElementById("emptyState");
@@ -148,14 +166,22 @@
   }
 
   function renderSchedule() {
-    const filter = teamFilter.value;
+    const selectedSchool = schoolFilter.value;
+    const selectedTeam = teamFilter.value;
     scheduleList.innerHTML = "";
 
     let rendered = 0;
 
     matchups.forEach(matchup => {
+      const schoolMatches =
+        selectedSchool === "ALL" ||
+        matchup.away === selectedSchool ||
+        matchup.home === selectedSchool;
+
+      if (!schoolMatches) return;
+
       const visibleGames = matchup.games.filter(game =>
-        filter === "ALL" || game.division === filter
+        selectedTeam === "ALL" || game.division === selectedTeam
       );
 
       if (!visibleGames.length) return;
@@ -188,10 +214,10 @@
     emptyState.hidden = rendered !== 0;
   }
 
+  schoolFilter.addEventListener("change", renderSchedule);
   teamFilter.addEventListener("change", renderSchedule);
   renderSchedule();
 </script>
 
 </body>
 </html>
-
