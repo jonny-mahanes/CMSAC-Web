@@ -26,7 +26,8 @@
     <span class="gbs-kicker">CMSAC GIRLS BASKETBALL</span>
     <h1>Report a Score</h1>
     <p>
-      Authorized coaches and school personnel may report final conference scores.
+      Authorized conference personnel may report final scores using the shared
+      CMSAC score-entry passcode.
     </p>
   </section>
 
@@ -35,24 +36,32 @@
     <div id="accessStep" class="gbr-step">
       <div class="gbr-step-head">
         <span>STEP 1</span>
-        <h2>Verify Access</h2>
+        <h2>Score Entry Access</h2>
       </div>
 
-      <div class="gbr-access-row">
-        <div class="gbr-field gbr-code-field">
-          <label for="accessCode">ACCESS CODE</label>
+      <div class="gbr-access-grid">
+
+        <div class="gbr-field">
+          <label for="accessCode">SCORE-ENTRY PASSCODE</label>
           <input
             id="accessCode"
             type="password"
-            inputmode="numeric"
-            autocomplete="one-time-code"
-            placeholder="Enter access code"
+            autocomplete="current-password"
+            placeholder="Enter shared passcode"
           >
         </div>
 
-        <button id="verifyButton" class="gbr-primary-button" type="button">
-          Verify
+        <div class="gbr-field">
+          <label for="schoolSelect">SCHOOL REPRESENTING</label>
+          <select id="schoolSelect" disabled>
+            <option value="">Loading schools...</option>
+          </select>
+        </div>
+
+        <button id="verifyButton" class="gbr-primary-button" type="button" disabled>
+          Continue
         </button>
+
       </div>
 
       <div id="accessMessage" class="gbr-message" hidden></div>
@@ -125,10 +134,8 @@
   </section>
 
   <section class="gbr-help">
-    <strong>Need a correction after a score is finalized?</strong>
-    Conference administrators should use the central
-    <a href="cmsac-info-admin.html#administration">CMSAC Administration</a>
-    area.
+    <strong>Need to override or administratively correct an official result?</strong>
+    That will remain a separate Athletic Director / conference administrator function.
   </section>
 
 </main>
@@ -142,6 +149,9 @@
 
   const accessCodeInput =
     document.getElementById("accessCode");
+
+  const schoolSelect =
+    document.getElementById("schoolSelect");
 
   const verifyButton =
     document.getElementById("verifyButton");
@@ -188,9 +198,10 @@
   const submitMessage =
     document.getElementById("submitMessage");
 
-  let verifiedAccessCode = "";
+  let verifiedScoreEntryCode = "";
   let verifiedSchool = "";
   let scheduleGames = [];
+  let scheduleSchools = [];
   let eligibleGames = [];
 
 
@@ -225,18 +236,25 @@
 
   function parseDate(value) {
     const text = String(value || "").trim();
+
     const match =
-      text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+      text.match(
+        /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/
+      );
 
     if (!match) {
       const fallback = new Date(text);
+
       return Number.isNaN(fallback.getTime())
         ? null
         : fallback;
     }
 
     let year = Number(match[3]);
-    if (year < 100) year += 2000;
+
+    if (year < 100) {
+      year += 2000;
+    }
 
     return new Date(
       year,
@@ -262,7 +280,9 @@
         : game.gameDate;
 
     const status =
-      String(game.gameStatus || "").toUpperCase();
+      String(
+        game.gameStatus || ""
+      ).toUpperCase();
 
     const statusText =
       status === "COMPLETED"
@@ -288,7 +308,11 @@
     const body =
       new URLSearchParams();
 
-    body.set("action", action);
+    body.set(
+      "action",
+      action
+    );
+
     body.set(
       "payload",
       JSON.stringify(payload)
@@ -349,6 +373,33 @@
       Array.isArray(payload.games)
         ? payload.games
         : [];
+
+    scheduleSchools =
+      Array.isArray(payload.schools)
+        ? payload.schools
+        : [];
+
+    buildSchoolChoices();
+  }
+
+
+  function buildSchoolChoices() {
+    schoolSelect.innerHTML =
+      '<option value="">Select your school</option>';
+
+    scheduleSchools.forEach(school => {
+      const option =
+        document.createElement("option");
+
+      option.value = school;
+      option.textContent =
+        school.toUpperCase();
+
+      schoolSelect.appendChild(option);
+    });
+
+    schoolSelect.disabled = false;
+    verifyButton.disabled = false;
   }
 
 
@@ -356,8 +407,9 @@
     eligibleGames =
       scheduleGames.filter(game => {
         const status =
-          String(game.gameStatus || "")
-            .toUpperCase();
+          String(
+            game.gameStatus || ""
+          ).toUpperCase();
 
         const allowedStatus =
           status === "SCHEDULED" ||
@@ -373,7 +425,10 @@
             game.homeSchool
           );
 
-        return allowedStatus && involvesSchool;
+        return (
+          allowedStatus &&
+          involvesSchool
+        );
       });
 
     gameSelect.innerHTML =
@@ -383,7 +438,9 @@
       const option =
         document.createElement("option");
 
-      option.value = game.gameId;
+      option.value =
+        game.gameId;
+
       option.textContent =
         formatGameLabel(game);
 
@@ -393,15 +450,20 @@
 
 
   function currentGame() {
-    return eligibleGames.find(
-      game =>
-        game.gameId === gameSelect.value
-    ) || null;
+    return (
+      eligibleGames.find(
+        game =>
+          game.gameId ===
+          gameSelect.value
+      ) || null
+    );
   }
 
 
   function showSelectedGame() {
-    clearMessage(submitMessage);
+    clearMessage(
+      submitMessage
+    );
 
     const game =
       currentGame();
@@ -443,51 +505,76 @@
 
 
   async function verifyAccess() {
-    clearMessage(accessMessage);
-    clearMessage(submitMessage);
+    clearMessage(
+      accessMessage
+    );
 
-    const accessCode =
+    clearMessage(
+      submitMessage
+    );
+
+    const scoreEntryCode =
       accessCodeInput.value.trim();
 
-    if (!accessCode) {
+    const submitterSchool =
+      schoolSelect.value.trim();
+
+    if (!scoreEntryCode) {
       showMessage(
         accessMessage,
         "error",
-        "Enter your CMSAC access code."
+        "Enter the CMSAC score-entry passcode."
+      );
+      return;
+    }
+
+    if (!submitterSchool) {
+      showMessage(
+        accessMessage,
+        "error",
+        "Select the school you are representing."
       );
       return;
     }
 
     verifyButton.disabled = true;
-    verifyButton.textContent = "Verifying...";
+    verifyButton.textContent =
+      "Checking...";
 
     try {
       const result =
         await postAction(
-          "verifyScoreAccess",
+          "verifySharedScoreAccess",
           {
-            accessCode: accessCode
+            scoreEntryCode:
+              scoreEntryCode,
+
+            submitterSchool:
+              submitterSchool
           }
         );
 
-      if (!result || result.ok !== true) {
+      if (
+        !result ||
+        result.ok !== true
+      ) {
         throw new Error(
           result && result.error
             ? result.error
-            : "Access could not be verified."
+            : "Score-entry access could not be verified."
         );
       }
 
-      verifiedAccessCode = accessCode;
-      verifiedSchool =
-        result.accessUserSchool || "";
+      verifiedScoreEntryCode =
+        scoreEntryCode;
 
-      await loadScheduleData();
+      verifiedSchool =
+        result.submitterSchool || "";
+
       buildGameChoices();
 
       verifiedUser.textContent =
-        (result.accessUserName || "Authorized User") +
-        " • " +
+        "Representing " +
         verifiedSchool;
 
       scoreStep.hidden = false;
@@ -495,7 +582,7 @@
       showMessage(
         accessMessage,
         "success",
-        "Access verified for " +
+        "Score-entry access verified for " +
         verifiedSchool +
         "."
       );
@@ -503,7 +590,7 @@
       gameSelect.focus();
 
     } catch (error) {
-      verifiedAccessCode = "";
+      verifiedScoreEntryCode = "";
       verifiedSchool = "";
       scoreStep.hidden = true;
 
@@ -511,17 +598,21 @@
         accessMessage,
         "error",
         error.message ||
-        "Access could not be verified."
+        "Score-entry access could not be verified."
       );
+
     } finally {
       verifyButton.disabled = false;
-      verifyButton.textContent = "Verify";
+      verifyButton.textContent =
+        "Continue";
     }
   }
 
 
   async function submitScore() {
-    clearMessage(submitMessage);
+    clearMessage(
+      submitMessage
+    );
 
     const game =
       currentGame();
@@ -536,10 +627,14 @@
     }
 
     const awayScore =
-      Number(awayScoreInput.value);
+      Number(
+        awayScoreInput.value
+      );
 
     const homeScore =
-      Number(homeScoreInput.value);
+      Number(
+        homeScoreInput.value
+      );
 
     if (
       !Number.isInteger(awayScore) ||
@@ -555,7 +650,9 @@
       return;
     }
 
-    if (awayScore === homeScore) {
+    if (
+      awayScore === homeScore
+    ) {
       showMessage(
         submitMessage,
         "error",
@@ -566,7 +663,9 @@
 
     const confirmed =
       window.confirm(
-        "Submit this final score?\n\n" +
+        "Submit this final score as " +
+        verifiedSchool +
+        "?\n\n" +
         game.awaySchool +
         " " +
         awayScore +
@@ -579,15 +678,19 @@
     if (!confirmed) return;
 
     submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
+    submitButton.textContent =
+      "Submitting...";
 
     try {
       const result =
         await postAction(
-          "submitGirlsBasketballScore",
+          "submitGirlsBasketballScoreShared",
           {
-            accessCode:
-              verifiedAccessCode,
+            scoreEntryCode:
+              verifiedScoreEntryCode,
+
+            submitterSchool:
+              verifiedSchool,
 
             gameId:
               game.gameId,
@@ -606,10 +709,20 @@
           }
         );
 
-      if (!result || result.ok !== true) {
+      if (
+        !result ||
+        result.ok !== true
+      ) {
         throw new Error(
-          result && (result.error || result.message)
-            ? (result.error || result.message)
+          result &&
+          (
+            result.error ||
+            result.message
+          )
+            ? (
+                result.error ||
+                result.message
+              )
             : "Score submission was not accepted."
         );
       }
@@ -625,7 +738,8 @@
       buildGameChoices();
 
       gameSelect.value =
-        result.gameId || game.gameId;
+        result.gameId ||
+        game.gameId;
 
       showSelectedGame();
 
@@ -636,6 +750,7 @@
         error.message ||
         "The score could not be submitted."
       );
+
     } finally {
       submitButton.disabled = false;
       submitButton.textContent =
@@ -652,7 +767,9 @@
   accessCodeInput.addEventListener(
     "keydown",
     event => {
-      if (event.key === "Enter") {
+      if (
+        event.key === "Enter"
+      ) {
         verifyAccess();
       }
     }
@@ -667,6 +784,20 @@
     "click",
     submitScore
   );
+
+
+  loadScheduleData()
+    .catch(error => {
+      showMessage(
+        accessMessage,
+        "error",
+        error.message ||
+        "The CMSAC schedule could not be loaded."
+      );
+
+      schoolSelect.innerHTML =
+        '<option value="">Schedule unavailable</option>';
+    });
 </script>
 
 </body>
