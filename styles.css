@@ -1195,14 +1195,14 @@ body{
 }
 
 .gbst-table th{
-  padding:10px 9px;
+  padding:11px 9px;
   background:#eef4fa;
-  color:#5a7188;
+  color:#35506c;
   border-bottom:1px solid #d8e3ed;
   text-align:center;
-  font-size:8px;
+  font-size:10px;
   font-weight:900;
-  letter-spacing:.8px;
+  letter-spacing:.9px;
 }
 
 .gbst-table td{
