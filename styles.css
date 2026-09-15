@@ -2209,3 +2209,13 @@ th{
     max-width:42%;
   }
 }
+
+
+/* ============================================================
+   CMSAC GLOBAL HIDDEN ATTRIBUTE SAFETY
+   Ensures JS-controlled elements remain truly hidden until shown.
+   ============================================================ */
+
+[hidden]{
+  display:none !important;
+}
