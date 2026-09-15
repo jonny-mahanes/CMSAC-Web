@@ -1,1 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report a Score | CMSAC Girls Basketball</title>
+  <meta name="description" content="Report a CMSAC Girls Basketball final score">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="CMSAC Home">
+    <img src="assets/cmsac-logo-banner.jpg" alt="CMSAC - Commonwealth Middle School Athletic Conference">
+  </a>
+
+  <nav class="topnav gb-nav" aria-label="Score reporting navigation">
+    <a href="girls-basketball.html">← Girls Basketball</a>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<main class="gbr-page">
+
+  <section class="gbr-heading">
+    <span class="gbs-kicker">CMSAC GIRLS BASKETBALL</span>
+    <h1>Report a Score</h1>
+    <p>
+      Authorized coaches and school personnel may report final conference scores.
+    </p>
+  </section>
+
+  <section class="gbr-card">
+
+    <div id="accessStep" class="gbr-step">
+      <div class="gbr-step-head">
+        <span>STEP 1</span>
+        <h2>Verify Access</h2>
+      </div>
+
+      <div class="gbr-access-row">
+        <div class="gbr-field gbr-code-field">
+          <label for="accessCode">ACCESS CODE</label>
+          <input
+            id="accessCode"
+            type="password"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            placeholder="Enter access code"
+          >
+        </div>
+
+        <button id="verifyButton" class="gbr-primary-button" type="button">
+          Verify
+        </button>
+      </div>
+
+      <div id="accessMessage" class="gbr-message" hidden></div>
+    </div>
+
+    <div id="scoreStep" class="gbr-step" hidden>
+      <div class="gbr-step-head gbr-step-head-inline">
+        <div>
+          <span>STEP 2</span>
+          <h2>Select Game &amp; Enter Final Score</h2>
+        </div>
+
+        <div id="verifiedUser" class="gbr-user-chip"></div>
+      </div>
+
+      <div class="gbr-field">
+        <label for="gameSelect">GAME</label>
+        <select id="gameSelect">
+          <option value="">Select a game</option>
+        </select>
+      </div>
+
+      <div id="gameDetails" class="gbr-game-details" hidden>
+        <div class="gbr-game-meta">
+          <span id="gameDate"></span>
+          <span id="gameDivision"></span>
+          <span id="gameTime"></span>
+        </div>
+
+        <div class="gbr-score-grid">
+          <div class="gbr-team-score">
+            <span class="gbr-side-label">AWAY</span>
+            <strong id="awaySchool">Away School</strong>
+            <input
+              id="awayScore"
+              type="number"
+              min="0"
+              step="1"
+              inputmode="numeric"
+              placeholder="0"
+              aria-label="Away score"
+            >
+          </div>
+
+          <div class="gbr-score-divider">FINAL</div>
+
+          <div class="gbr-team-score">
+            <span class="gbr-side-label">HOME</span>
+            <strong id="homeSchool">Home School</strong>
+            <input
+              id="homeScore"
+              type="number"
+              min="0"
+              step="1"
+              inputmode="numeric"
+              placeholder="0"
+              aria-label="Home score"
+            >
+          </div>
+        </div>
+
+        <button id="submitButton" class="gbr-submit-button" type="button">
+          Submit Final Score
+        </button>
+
+        <div id="submitMessage" class="gbr-message" hidden></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="gbr-help">
+    <strong>Need a correction after a score is finalized?</strong>
+    Conference administrators should use the central
+    <a href="cmsac-info-admin.html#administration">CMSAC Administration</a>
+    area.
+  </section>
+
+</main>
+
+<script>
+  const API_BASE =
+    "https://script.google.com/macros/s/AKfycbxxOoHFjaBhHs46Jq3-9cikIg7SKXUkDHMw0EpRlmg7Dz0sW35w4Fy1luoRZU9FJEFS/exec";
+
+  const SCHEDULE_URL =
+    API_BASE + "?action=girlsBasketballSchedule";
+
+  const accessCodeInput =
+    document.getElementById("accessCode");
+
+  const verifyButton =
+    document.getElementById("verifyButton");
+
+  const accessMessage =
+    document.getElementById("accessMessage");
+
+  const scoreStep =
+    document.getElementById("scoreStep");
+
+  const verifiedUser =
+    document.getElementById("verifiedUser");
+
+  const gameSelect =
+    document.getElementById("gameSelect");
+
+  const gameDetails =
+    document.getElementById("gameDetails");
+
+  const gameDate =
+    document.getElementById("gameDate");
+
+  const gameDivision =
+    document.getElementById("gameDivision");
+
+  const gameTime =
+    document.getElementById("gameTime");
+
+  const awaySchoolEl =
+    document.getElementById("awaySchool");
+
+  const homeSchoolEl =
+    document.getElementById("homeSchool");
+
+  const awayScoreInput =
+    document.getElementById("awayScore");
+
+  const homeScoreInput =
+    document.getElementById("homeScore");
+
+  const submitButton =
+    document.getElementById("submitButton");
+
+  const submitMessage =
+    document.getElementById("submitMessage");
+
+  let verifiedAccessCode = "";
+  let verifiedSchool = "";
+  let scheduleGames = [];
+  let eligibleGames = [];
+
+
+  function showMessage(element, type, text) {
+    element.hidden = false;
+    element.className =
+      "gbr-message " + type;
+    element.textContent = text;
+  }
+
+
+  function clearMessage(element) {
+    element.hidden = true;
+    element.className = "gbr-message";
+    element.textContent = "";
+  }
+
+
+  function schoolKey(value) {
+    return String(value || "")
+      .toUpperCase()
+      .replace(/\bCOUNTY\b/g, "")
+      .replace(/\bCO\b/g, "")
+      .replace(/[^A-Z0-9]/g, "");
+  }
+
+
+  function sameSchool(a, b) {
+    return schoolKey(a) === schoolKey(b);
+  }
+
+
+  function parseDate(value) {
+    const text = String(value || "").trim();
+    const match =
+      text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+
+    if (!match) {
+      const fallback = new Date(text);
+      return Number.isNaN(fallback.getTime())
+        ? null
+        : fallback;
+    }
+
+    let year = Number(match[3]);
+    if (year < 100) year += 2000;
+
+    return new Date(
+      year,
+      Number(match[1]) - 1,
+      Number(match[2])
+    );
+  }
+
+
+  function formatGameLabel(game) {
+    const date =
+      parseDate(game.gameDate);
+
+    const dateText =
+      date
+        ? date.toLocaleDateString(
+            "en-US",
+            {
+              month: "short",
+              day: "numeric"
+            }
+          )
+        : game.gameDate;
+
+    const status =
+      String(game.gameStatus || "").toUpperCase();
+
+    const statusText =
+      status === "COMPLETED"
+        ? " • COMPLETED"
+        : "";
+
+    return (
+      dateText +
+      " • " +
+      game.division +
+      " • " +
+      game.awaySchool +
+      " at " +
+      game.homeSchool +
+      " • " +
+      (game.gameTime || "TBA") +
+      statusText
+    );
+  }
+
+
+  async function postAction(action, payload) {
+    const body =
+      new URLSearchParams();
+
+    body.set("action", action);
+    body.set(
+      "payload",
+      JSON.stringify(payload)
+    );
+
+    const response =
+      await fetch(
+        API_BASE,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/x-www-form-urlencoded;charset=UTF-8"
+          },
+          body: body.toString()
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "CMSAC service returned HTTP " +
+        response.status
+      );
+    }
+
+    return response.json();
+  }
+
+
+  async function loadScheduleData() {
+    const response =
+      await fetch(
+        SCHEDULE_URL,
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Could not load the CMSAC schedule."
+      );
+    }
+
+    const payload =
+      await response.json();
+
+    if (!payload || payload.ok !== true) {
+      throw new Error(
+        payload && payload.error
+          ? payload.error
+          : "Schedule data was not available."
+      );
+    }
+
+    scheduleGames =
+      Array.isArray(payload.games)
+        ? payload.games
+        : [];
+  }
+
+
+  function buildGameChoices() {
+    eligibleGames =
+      scheduleGames.filter(game => {
+        const status =
+          String(game.gameStatus || "")
+            .toUpperCase();
+
+        const allowedStatus =
+          status === "SCHEDULED" ||
+          status === "COMPLETED";
+
+        const involvesSchool =
+          sameSchool(
+            verifiedSchool,
+            game.awaySchool
+          ) ||
+          sameSchool(
+            verifiedSchool,
+            game.homeSchool
+          );
+
+        return allowedStatus && involvesSchool;
+      });
+
+    gameSelect.innerHTML =
+      '<option value="">Select a game</option>';
+
+    eligibleGames.forEach(game => {
+      const option =
+        document.createElement("option");
+
+      option.value = game.gameId;
+      option.textContent =
+        formatGameLabel(game);
+
+      gameSelect.appendChild(option);
+    });
+  }
+
+
+  function currentGame() {
+    return eligibleGames.find(
+      game =>
+        game.gameId === gameSelect.value
+    ) || null;
+  }
+
+
+  function showSelectedGame() {
+    clearMessage(submitMessage);
+
+    const game =
+      currentGame();
+
+    if (!game) {
+      gameDetails.hidden = true;
+      return;
+    }
+
+    gameDetails.hidden = false;
+
+    gameDate.textContent =
+      game.gameDate || "";
+
+    gameDivision.textContent =
+      game.division || "";
+
+    gameTime.textContent =
+      game.gameTime || "TBA";
+
+    awaySchoolEl.textContent =
+      game.awaySchool;
+
+    homeSchoolEl.textContent =
+      game.homeSchool;
+
+    awayScoreInput.value =
+      game.awayScore === null ||
+      game.awayScore === undefined
+        ? ""
+        : game.awayScore;
+
+    homeScoreInput.value =
+      game.homeScore === null ||
+      game.homeScore === undefined
+        ? ""
+        : game.homeScore;
+  }
+
+
+  async function verifyAccess() {
+    clearMessage(accessMessage);
+    clearMessage(submitMessage);
+
+    const accessCode =
+      accessCodeInput.value.trim();
+
+    if (!accessCode) {
+      showMessage(
+        accessMessage,
+        "error",
+        "Enter your CMSAC access code."
+      );
+      return;
+    }
+
+    verifyButton.disabled = true;
+    verifyButton.textContent = "Verifying...";
+
+    try {
+      const result =
+        await postAction(
+          "verifyScoreAccess",
+          {
+            accessCode: accessCode
+          }
+        );
+
+      if (!result || result.ok !== true) {
+        throw new Error(
+          result && result.error
+            ? result.error
+            : "Access could not be verified."
+        );
+      }
+
+      verifiedAccessCode = accessCode;
+      verifiedSchool =
+        result.accessUserSchool || "";
+
+      await loadScheduleData();
+      buildGameChoices();
+
+      verifiedUser.textContent =
+        (result.accessUserName || "Authorized User") +
+        " • " +
+        verifiedSchool;
+
+      scoreStep.hidden = false;
+
+      showMessage(
+        accessMessage,
+        "success",
+        "Access verified for " +
+        verifiedSchool +
+        "."
+      );
+
+      gameSelect.focus();
+
+    } catch (error) {
+      verifiedAccessCode = "";
+      verifiedSchool = "";
+      scoreStep.hidden = true;
+
+      showMessage(
+        accessMessage,
+        "error",
+        error.message ||
+        "Access could not be verified."
+      );
+    } finally {
+      verifyButton.disabled = false;
+      verifyButton.textContent = "Verify";
+    }
+  }
+
+
+  async function submitScore() {
+    clearMessage(submitMessage);
+
+    const game =
+      currentGame();
+
+    if (!game) {
+      showMessage(
+        submitMessage,
+        "error",
+        "Select the game you are reporting."
+      );
+      return;
+    }
+
+    const awayScore =
+      Number(awayScoreInput.value);
+
+    const homeScore =
+      Number(homeScoreInput.value);
+
+    if (
+      !Number.isInteger(awayScore) ||
+      awayScore < 0 ||
+      !Number.isInteger(homeScore) ||
+      homeScore < 0
+    ) {
+      showMessage(
+        submitMessage,
+        "error",
+        "Both scores must be whole numbers of 0 or greater."
+      );
+      return;
+    }
+
+    if (awayScore === homeScore) {
+      showMessage(
+        submitMessage,
+        "error",
+        "A final Girls Basketball score cannot be tied."
+      );
+      return;
+    }
+
+    const confirmed =
+      window.confirm(
+        "Submit this final score?\n\n" +
+        game.awaySchool +
+        " " +
+        awayScore +
+        "\n" +
+        game.homeSchool +
+        " " +
+        homeScore
+      );
+
+    if (!confirmed) return;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    try {
+      const result =
+        await postAction(
+          "submitGirlsBasketballScore",
+          {
+            accessCode:
+              verifiedAccessCode,
+
+            gameId:
+              game.gameId,
+
+            awayScore:
+              awayScore,
+
+            homeScore:
+              homeScore,
+
+            source:
+              "CMSAC WEB",
+
+            notes:
+              ""
+          }
+        );
+
+      if (!result || result.ok !== true) {
+        throw new Error(
+          result && (result.error || result.message)
+            ? (result.error || result.message)
+            : "Score submission was not accepted."
+        );
+      }
+
+      showMessage(
+        submitMessage,
+        "success",
+        result.message ||
+        "Score submitted successfully."
+      );
+
+      await loadScheduleData();
+      buildGameChoices();
+
+      gameSelect.value =
+        result.gameId || game.gameId;
+
+      showSelectedGame();
+
+    } catch (error) {
+      showMessage(
+        submitMessage,
+        "error",
+        error.message ||
+        "The score could not be submitted."
+      );
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent =
+        "Submit Final Score";
+    }
+  }
+
+
+  verifyButton.addEventListener(
+    "click",
+    verifyAccess
+  );
+
+  accessCodeInput.addEventListener(
+    "keydown",
+    event => {
+      if (event.key === "Enter") {
+        verifyAccess();
+      }
+    }
+  );
+
+  gameSelect.addEventListener(
+    "change",
+    showSelectedGame
+  );
+
+  submitButton.addEventListener(
+    "click",
+    submitScore
+  );
+</script>
+
+</body>
+</html>
