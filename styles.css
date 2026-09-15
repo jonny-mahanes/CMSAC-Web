@@ -1833,3 +1833,379 @@ body{
     width:100%;
   }
 }
+
+
+/* ============================================================
+   CMSAC REPORT SCORE - SUCCESS CONFIRMATION
+   ============================================================ */
+
+.gbr-success-panel{
+  margin-top:18px;
+  padding:22px;
+  border:1px solid #b9dec4;
+  border-radius:12px;
+  background:linear-gradient(180deg,#f5fbf7,#edf8f0);
+  display:flex;
+  gap:16px;
+  box-shadow:0 8px 20px rgba(42,110,65,.08);
+}
+
+.gbr-success-icon{
+  width:54px;
+  height:54px;
+  flex:0 0 54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#2f7d46;
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  box-shadow:0 5px 12px rgba(47,125,70,.20);
+}
+
+.gbr-success-copy{
+  flex:1 1 auto;
+}
+
+.gbr-success-kicker{
+  display:block;
+  margin-bottom:3px;
+  color:#4b7a58;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.4px;
+}
+
+.gbr-success-copy h3{
+  margin:0 0 14px;
+  color:#214d31;
+  font-size:24px;
+  line-height:1.1;
+}
+
+.gbr-success-summary{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.gbr-success-summary div{
+  padding:10px 12px;
+  border:1px solid #d7eadc;
+  border-radius:8px;
+  background:#fff;
+}
+
+.gbr-success-summary span{
+  display:block;
+  margin-bottom:3px;
+  color:#71897a;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.gbr-success-summary strong{
+  color:#234f31;
+  font-size:12px;
+  line-height:1.35;
+}
+
+.gbr-success-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.gbr-secondary-button,
+.gbr-link-button{
+  min-height:40px;
+  padding:0 15px;
+  border-radius:7px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.gbr-secondary-button{
+  border:1px solid #9fb9aa;
+  background:#fff;
+  color:#2f6842;
+  cursor:pointer;
+}
+
+.gbr-secondary-button:hover{
+  background:#f5faf6;
+}
+
+.gbr-link-button{
+  background:var(--navy);
+  color:#fff;
+}
+
+.gbr-link-button:hover{
+  background:var(--navy2);
+}
+
+@media(max-width:700px){
+  .gbr-success-panel{
+    display:block;
+    padding:18px;
+  }
+
+  .gbr-success-icon{
+    margin-bottom:12px;
+  }
+
+  .gbr-success-summary{
+    grid-template-columns:1fr;
+  }
+
+  .gbr-success-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .gbr-secondary-button,
+  .gbr-link-button{
+    width:100%;
+  }
+}
+
+
+/* ============================================================
+   CMSAC GLOBAL MOBILE WIDTH / OVERFLOW SAFETY STANDARD
+   Applies site-wide to prevent accidental page-level sideways
+   scrolling on phones while preserving controlled table scroll.
+   ============================================================ */
+
+html,
+body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+img,
+svg,
+video,
+canvas{
+  max-width:100%;
+  height:auto;
+}
+
+main,
+header,
+nav,
+section,
+article,
+aside,
+footer,
+div{
+  min-width:0;
+}
+
+input,
+select,
+textarea,
+button{
+  max-width:100%;
+  min-width:0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+strong,
+a,
+label,
+td,
+th{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+
+.topbar,
+.brand,
+.topnav,
+.gb-page,
+.gbs-page,
+.gbst-page,
+.gbr-page{
+  max-width:100%;
+}
+
+.brand img{
+  display:block;
+  max-width:100%;
+}
+
+.topnav{
+  min-width:0;
+}
+
+.gbs-heading,
+.gbst-heading,
+.gbr-step-head-inline,
+.gbr-access-row,
+.gbr-access-grid,
+.gbr-score-grid,
+.gbr-success-panel,
+.gbr-success-actions{
+  min-width:0;
+}
+
+.gbs-controls,
+.gbst-controls{
+  max-width:100%;
+}
+
+.gbs-filter-group,
+.gbr-field{
+  min-width:0;
+}
+
+.gbs-controls select,
+.gbst-controls select,
+.gbr-field select,
+.gbr-field input{
+  width:100%;
+}
+
+.gbst-table-wrap{
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.gbst-table{
+  max-width:none;
+}
+
+@media(max-width:900px){
+  .topbar{
+    gap:12px;
+  }
+
+  .topnav{
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+}
+
+@media(max-width:760px){
+  .gbs-heading,
+  .gbst-heading{
+    align-items:stretch;
+  }
+
+  .gbs-controls,
+  .gbst-controls{
+    width:100%;
+  }
+
+  .gbs-filter-group,
+  .gbst-controls .gbs-filter-group{
+    width:100%;
+  }
+
+  .gbs-controls select,
+  .gbst-controls select{
+    width:100%;
+  }
+}
+
+@media(max-width:620px){
+  .topbar{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .brand{
+    max-width:68%;
+  }
+
+  .topnav{
+    gap:6px;
+  }
+
+  .topnav a{
+    white-space:normal;
+    text-align:center;
+  }
+
+  .gb-page,
+  .gbs-page,
+  .gbst-page,
+  .gbr-page{
+    width:100%;
+    max-width:100%;
+  }
+
+  .gbr-card,
+  .gbst-division,
+  .gbs-matchup{
+    width:100%;
+    max-width:100%;
+  }
+
+  .gbr-team-score{
+    width:100%;
+  }
+
+  .gbr-team-score input{
+    max-width:100%;
+  }
+
+  .gbr-success-copy{
+    min-width:0;
+  }
+
+  .gbr-success-summary strong{
+    display:block;
+    max-width:100%;
+  }
+}
+
+@media(max-width:430px){
+  .brand{
+    max-width:62%;
+  }
+
+  .topnav a{
+    font-size:12px;
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  .gbr-heading h1,
+  .gbs-heading h1{
+    font-size:31px;
+  }
+
+  .gbst-division-head{
+    gap:8px;
+  }
+
+  .gbst-record-note{
+    max-width:42%;
+  }
+}
