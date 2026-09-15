@@ -1292,3 +1292,214 @@ body{
     min-width:0;
   }
 }
+
+
+/* ============================================================
+   CMSAC GIRLS BASKETBALL STANDINGS - v1.1 POLISH
+   ============================================================ */
+
+.gbst-controls{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  flex:0 0 auto;
+}
+
+.gbst-controls .gbs-filter-group{
+  display:block;
+}
+
+.gbst-controls .gbs-filter-group label{
+  display:block;
+  margin-bottom:4px;
+  color:#64788f;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.2px;
+}
+
+.gbst-controls select{
+  min-width:150px;
+  height:39px;
+  padding:0 34px 0 12px;
+  border:1px solid #bfcddd;
+  border-radius:7px;
+  background:#fff;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.gbst-container{
+  gap:12px;
+}
+
+.gbst-division-head{
+  min-height:58px;
+  padding:9px 16px;
+}
+
+.gbst-division-head span{
+  font-size:9px;
+}
+
+.gbst-division-head h2{
+  font-size:24px;
+}
+
+.gbst-record-note{
+  font-size:11px;
+}
+
+.gbst-table th{
+  padding:9px 8px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+
+.gbst-table td{
+  padding:9px 8px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.gbst-table td.gbst-school{
+  font-size:13px;
+}
+
+.gbst-seed{
+  width:31px;
+  height:31px;
+  font-size:12px;
+}
+
+@media(max-width:700px){
+  .gbst-heading{
+    display:block;
+  }
+
+  .gbst-controls{
+    margin-top:14px;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+  }
+}
+
+@media print{
+  @page{
+    size: Letter landscape;
+    margin: 0.28in;
+  }
+
+  html,
+  body{
+    width:100%;
+    margin:0;
+    padding:0;
+    background:#fff;
+  }
+
+  body{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+
+  .topbar,
+  .gbst-controls,
+  .gbs-api-status{
+    display:none !important;
+  }
+
+  .gbst-page{
+    max-width:none;
+    width:100%;
+    padding:0;
+    zoom:.82;
+  }
+
+  .gbs-heading.gbst-heading{
+    margin:0 0 7px;
+  }
+
+  .gbs-kicker{
+    font-size:9px;
+    margin-bottom:2px;
+  }
+
+  .gbs-heading h1{
+    font-size:28px;
+    line-height:1;
+  }
+
+  .gbs-heading p{
+    margin-top:4px;
+    font-size:10px;
+  }
+
+  .gbst-container{
+    gap:7px;
+  }
+
+  .gbst-division{
+    break-inside:avoid;
+    page-break-inside:avoid;
+    margin:0;
+    box-shadow:none;
+    border-radius:7px;
+  }
+
+  .gbst-division-head{
+    min-height:38px;
+    padding:5px 10px;
+  }
+
+  .gbst-division-head span{
+    font-size:7px;
+    margin-bottom:1px;
+  }
+
+  .gbst-division-head h2{
+    font-size:17px;
+  }
+
+  .gbst-record-note{
+    font-size:8px;
+  }
+
+  .gbst-table{
+    min-width:0;
+  }
+
+  .gbst-table th{
+    padding:4px 5px;
+    font-size:8px;
+  }
+
+  .gbst-table td{
+    padding:4px 5px;
+    font-size:8.5px;
+    line-height:1.05;
+  }
+
+  .gbst-table td.gbst-school{
+    font-size:9px;
+  }
+
+  .gbst-seed{
+    width:22px;
+    height:22px;
+    border-radius:6px;
+    font-size:8px;
+    box-shadow:none;
+  }
+
+  .gbst-seed-cell{
+    width:42px;
+  }
+
+  .gbst-table tbody tr:hover{
+    background:transparent;
+  }
+}
