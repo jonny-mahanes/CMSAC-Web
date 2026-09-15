@@ -563,22 +563,52 @@ body{
 }
 
 .gb-card-number{
-  width:48px;
-  height:48px;
-  border-radius:50%;
+  position:relative;
+  width:50px;
+  height:50px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#edf3f9;
-  color:var(--navy);
+  overflow:hidden;
+  background:linear-gradient(145deg,#0a4f8f,#062f60);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 6px 14px rgba(5,47,98,.20),
+    inset 0 1px 0 rgba(255,255,255,.18);
   font-weight:900;
-  font-size:13px;
-  letter-spacing:1px;
+  font-size:14px;
+  letter-spacing:1.5px;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+
+.gb-card-number::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:rgba(255,255,255,.32);
+}
+
+.gb-card-number::after{
+  content:"";
+  position:absolute;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  right:-10px;
+  top:-9px;
+  background:rgba(255,255,255,.09);
 }
 
 .gb-card-primary .gb-card-number{
-  background:#fff0f2;
-  color:var(--red);
+  background:linear-gradient(145deg,#ef3c4f,#b90f26);
+  box-shadow:
+    0 6px 14px rgba(215,25,45,.22),
+    inset 0 1px 0 rgba(255,255,255,.20);
 }
 
 .gb-card-copy{
