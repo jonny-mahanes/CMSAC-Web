@@ -2987,3 +2987,20 @@ th{
     line-height:1.35;
   }
 }
+
+
+/* ============================================================
+   CMSAC ADMIN OVERRIDE NOTE - INFORMATIONAL STYLE
+   Keep the action button red, but make the explanatory note
+   read as guidance rather than an error.
+   ============================================================ */
+
+.cmsac-admin-warning{
+  border-left-color:#2f6fa3;
+  background:#eef6fc;
+  color:#2f5575;
+}
+
+.cmsac-admin-warning strong{
+  color:#214f75;
+}
