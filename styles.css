@@ -3049,3 +3049,52 @@ th{
     width:100%;
   }
 }
+
+
+/* ============================================================
+   CMSAC ADMIN RESPONSIVE BANNER FIX
+   Desktop + phone safe:
+   Prevents the Exit Admin Mode button from expanding across the
+   flex row and squeezing the admin identity text into a narrow
+   vertical column on wider screens.
+   ============================================================ */
+
+.cmsac-admin-mode-banner > div{
+  flex:1 1 auto;
+  width:auto;
+  min-width:0;
+}
+
+.cmsac-admin-mode-banner .cmsac-admin-exit-button{
+  width:auto !important;
+  max-width:none;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+
+.cmsac-admin-success-actions .cmsac-admin-secondary-button,
+.cmsac-admin-success-actions .cmsac-admin-exit-success-button{
+  width:auto;
+}
+
+@media(max-width:700px){
+
+  .cmsac-admin-mode-banner{
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+
+  .cmsac-admin-mode-banner > div{
+    flex:1 1 220px;
+  }
+
+  .cmsac-admin-mode-banner .cmsac-admin-exit-button{
+    width:auto !important;
+    max-width:100%;
+  }
+
+  .cmsac-admin-success-actions .cmsac-admin-secondary-button,
+  .cmsac-admin-success-actions .cmsac-admin-exit-success-button{
+    width:100%;
+  }
+}
