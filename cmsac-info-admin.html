@@ -250,9 +250,15 @@
               </div>
             </div>
 
-            <button id="editAnotherResultButton" class="cmsac-admin-secondary-button" type="button">
-              Edit Another Result
-            </button>
+            <div class="cmsac-admin-success-actions">
+              <button id="editAnotherResultButton" class="cmsac-admin-secondary-button" type="button">
+                Edit Another Result
+              </button>
+
+              <button id="exitAdminSuccessButton" class="cmsac-admin-exit-success-button" type="button">
+                Exit Admin Mode
+              </button>
+            </div>
           </div>
         </div>
 
@@ -368,6 +374,9 @@
 
   const editAnotherResultButton =
     document.getElementById("editAnotherResultButton");
+
+  const exitAdminSuccessButton =
+    document.getElementById("exitAdminSuccessButton");
 
   let verifiedAdminCode = "";
   let verifiedAdminName = "";
@@ -1095,6 +1104,11 @@
   editAnotherResultButton.addEventListener(
     "click",
     editAnotherResult
+  );
+
+  exitAdminSuccessButton.addEventListener(
+    "click",
+    exitAdminMode
   );
 </script>
 
