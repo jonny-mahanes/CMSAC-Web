@@ -3004,3 +3004,48 @@ th{
 .cmsac-admin-warning strong{
   color:#214f75;
 }
+
+
+/* ============================================================
+   CMSAC ADMIN SUCCESS ACTIONS
+   Two clear next-step choices after a successful override.
+   ============================================================ */
+
+.cmsac-admin-success-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+.cmsac-admin-success-actions .cmsac-admin-secondary-button{
+  margin-top:0;
+}
+
+.cmsac-admin-exit-success-button{
+  min-height:42px;
+  padding:0 15px;
+  border:0;
+  border-radius:7px;
+  background:#102a4c;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.cmsac-admin-exit-success-button:hover{
+  background:#081b32;
+}
+
+@media(max-width:700px){
+  .cmsac-admin-success-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .cmsac-admin-success-actions .cmsac-admin-secondary-button,
+  .cmsac-admin-exit-success-button{
+    width:100%;
+  }
+}
